@@ -3,9 +3,23 @@
 <html>
   <head>
     <!-- Using the 'async' attribute will keep our script from blocking the page load. -->
-    <script src="bundle.js" async></script>
   </head>
   <body>
-    <ul id="tasks"></ul>
+    <div id="todo">
+    </div>
+    <script id="todoTemplate" type="text/html">
+      <%= title%>
+      <button class="remove">remove</button>
+    </script>
+    <script id="inputTemplate" type="text/html">
+      
+        <label>New Task:</label>
+        <input type="" id="fname" name="fname">
+        <input type="submit" value="Submit">
+      
+    </script>
+    
+    <script src="bundle.js"></script>
+    
   </body>
 </html>
