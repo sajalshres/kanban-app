@@ -18,18 +18,24 @@
   },
   "tasks": [
     {
-      "id": 2,
-      "title": "vm installation process"
+      "title": "github account creation",
+      "status": "todo",
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "vscode installation process"
+      "title": "frontend design",
+      "status": "todo",
+      "id": 4
     },
     {
-      "id": 4,
-      "title": "laptop configuration"
+      "title": "database configuration",
+      "status": "todo",
+      "id": 5
+    },
+    {
+      "title": "dockerhub account creation",
+      "status": "todo",
+      "id": 6
     }
-  ],
-  "superhero": {},
-  "sunita": {}
+  ]
 }

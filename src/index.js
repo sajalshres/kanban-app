@@ -4,19 +4,39 @@ var Collection = require('./collections/collection')
 var _ = require('underscore')
 var $ = require('jquery')
 
-
-
-
-
 var TodosView = Backbone.View.extend({
+    events: {
+        'change input#newTask': 'loadTask'
+    },
+
+
+    loadTask: function(event) {
+        var val = $(event.currentTarget).val();
+        var newModel = new Model.Task();
+        
+        newModel.set("title", val);
+        newModel.set("status", "todo");
+        
+        newModel.save(null,{
+            success:function(){
+                console.log("model saved")
+                tasksTodo.fetch();
+            },
+            error:function(){
+                console.log("model saving failed")
+            }
+        })
+      
+    }
+,
     initialize: function () {
         this.model.on("remove", this.render, this);
+        this.model.on("add", this.render, this);
     },
     updater:function(){
         
     },
     render: function () {
-        console.log('chalyo')
         this.$el.html("");
         var template = _.template($("#inputTemplate").html());
         var html = template(this.model.toJSON());
@@ -32,10 +52,15 @@ var TodosView = Backbone.View.extend({
 var TodoView = Backbone.View.extend({
     events: {
         "click": "onClick",
-        "click .remove": "onClickRemove"
+        "click .remove": "onClickRemove",
+        
     },
+    insert:function(){
+        console.log('submit done')
+    }
+    ,
     onClick: function () {
-        console.log("hello clicked")
+        console.log("item clicked")
     },
     onClickRemove: function (e) {
         e.stopPropagation();
@@ -84,6 +109,10 @@ var fetcher = function(){
 }
 
 fetcher();
+
+
+
+
 
 
 
