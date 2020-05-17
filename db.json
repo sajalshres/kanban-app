@@ -23,11 +23,6 @@
       "id": 2
     },
     {
-      "title": "frontend design",
-      "status": "todo",
-      "id": 4
-    },
-    {
       "title": "database configuration",
       "status": "todo",
       "id": 5
@@ -36,6 +31,41 @@
       "title": "dockerhub account creation",
       "status": "todo",
       "id": 6
+    },
+    {
+      "title": "Commit last change",
+      "status": "progress",
+      "id": 8
+    },
+    {
+      "title": "virtual linux setup",
+      "status": "todo",
+      "id": 9
+    },
+    {
+      "title": "CSS editing",
+      "status": "progress",
+      "id": 10
+    },
+    {
+      "title": "Ticket assign",
+      "status": "done",
+      "id": 11
+    },
+    {
+      "title": "CRUD operation",
+      "status": "done",
+      "id": 13
+    },
+    {
+      "title": "Data Structuring",
+      "status": "progress",
+      "id": 14
+    },
+    {
+      "title": "Postman Installation",
+      "status": "done",
+      "id": 15
     }
   ]
 }

@@ -7,17 +7,14 @@
 </head>
 
 <body>
-  <div id="todo"></div>
-  <br>
-  <br>
-  <div id="progress"></div>
+  
   <script id="todoTemplate" type="text/html">
       <%= title%>
       <button class="remove">remove</button>
     </script>
   <script id="inputTemplate" type="text/html">
 
-        <label>New Task:</label>
+        <label><%= status%> Task:</label>
         <input type="text" id="newTask" name="fname">
         <input type="submit" value="add">
       
