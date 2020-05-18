@@ -38,34 +38,39 @@
       "id": 8
     },
     {
-      "title": "virtual linux setup",
-      "status": "todo",
-      "id": 9
-    },
-    {
-      "title": "CSS editing",
+      "title": "CSS editing and testing",
       "status": "progress",
       "id": 10
     },
     {
-      "title": "Ticket assign",
+      "title": "Ticket assign complete",
       "status": "done",
       "id": 11
     },
     {
-      "title": "CRUD operation",
+      "title": "CRUD operation complete",
       "status": "done",
       "id": 13
     },
     {
-      "title": "Data Structuring",
-      "status": "progress",
-      "id": 14
-    },
-    {
-      "title": "Postman Installation",
+      "title": "Postman Installation and use complete",
       "status": "done",
       "id": 15
+    },
+    {
+      "title": "Add Column",
+      "status": "todo",
+      "id": 16
+    },
+    {
+      "title": "edit button",
+      "status": "progress",
+      "id": 17
+    },
+    {
+      "title": "Backend and frontend communication",
+      "status": "done",
+      "id": 18
     }
   ]
 }

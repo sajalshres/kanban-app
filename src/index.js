@@ -28,9 +28,9 @@ var TodosView = Backbone.View.extend({
         this.myPublic = option.option;
         this.model.on("remove", this.render, this);
         this.model.on("add", this.render, this);
+        this.model.on("change", this.rener, this);
     },
     render: function () {
-        console.log(this.myPublic)
         this.$el.html("");
         var template = _.template($("#inputTemplate").html());
         var html = template({status: this.myPublic});
@@ -49,21 +49,40 @@ var TodoView = Backbone.View.extend({
     events: {
         "click": "onClick",
         "click .remove": "onClickRemove",
+        "click .edit": "onClickEdit",
+        'change input#editTask': 'editTask'
 
     },
     insert: function () {
         console.log('submit done')
-    }
-    ,
+    },
     onClick: function () {
         console.log("item clicked")
     },
     onClickRemove: function (e) {
         e.stopPropagation();
-        console.log('btn clicked');
         tasks.remove(this.model);
         this.model.destroy();
-        console.log(tasks)
+    },
+    onClickEdit: function(e){
+        e.stopPropagation();
+        var template = _.template($("#editTemplate").html());
+        var html = template(this.model.toJSON());
+        this.$el.html(html);
+    },
+    editTask: function(event){
+        event.stopPropagation();
+        var val = $(event.currentTarget).val();
+        this.model.set("title", val);
+        this.model.save(null, {
+            success: function(){
+                console.log("edit success");
+                tasks.fetch();
+            },
+            error:function(){
+                console.log("server down")
+            }
+        })
     },
     tagName: "div",
     attributes: function () {
@@ -73,8 +92,6 @@ var TodoView = Backbone.View.extend({
     },
     initialize: function () {
         this.model.on("change", this.render, this);
-        console.log('hello')
-        console.log(this.model.toJSON().title)
         this.id = this.model.toJSON().title;
     },
     render: function () {
@@ -103,7 +120,7 @@ function checker() {
             }
         },
         error: function () {
-
+            console.log("server down")
         }
     })
 }
