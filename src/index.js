@@ -50,13 +50,20 @@ var TodoView = Backbone.View.extend({
         "click": "onClick",
         "click .remove": "onClickRemove",
         "click .edit": "onClickEdit",
-        'change input#editTask': 'editTask'
-
+        "input .editTask": "syncer",
+        "click .cancel": "onClickCancel",
+        "click .editText": "editTask"
     },
     insert: function () {
         console.log('submit done')
     },
-    onClick: function () {
+    syncer: function () {
+        this.myPublic = document.getElementById("editor").value
+        document.getElementById("edit").style.visibility = "visible";
+        console.log(this.myPublic);
+    },
+    onClick: function (e) {
+        e.stopPropagation();
         console.log("item clicked")
     },
     onClickRemove: function (e) {
@@ -69,11 +76,13 @@ var TodoView = Backbone.View.extend({
         var template = _.template($("#editTemplate").html());
         var html = template(this.model.toJSON());
         this.$el.html(html);
+        document.getElementById("edit").style.visibility = "hidden";
+
     },
     editTask: function(event){
         event.stopPropagation();
-        var val = $(event.currentTarget).val();
-        this.model.set("title", val);
+        console.log("editTask clicked")
+        this.model.set("title", this.myPublic);
         this.model.save(null, {
             success: function(){
                 console.log("edit success");
@@ -83,6 +92,11 @@ var TodoView = Backbone.View.extend({
                 console.log("server down")
             }
         })
+    },
+    onClickCancel: function(event){
+        event.stopPropagation();
+        console.log("cancel clicked")
+        this.render();
     },
     tagName: "div",
     attributes: function () {
