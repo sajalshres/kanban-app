@@ -33,7 +33,7 @@
       "id": 6
     },
     {
-      "title": "Commit last change",
+      "title": "Commit",
       "status": "progress",
       "id": 8
     },
@@ -66,6 +66,16 @@
       "title": "Javascript Documentation",
       "status": "Archive",
       "id": 20
+    },
+    {
+      "title": "zoom",
+      "status": "progress",
+      "id": 21
+    },
+    {
+      "title": "messaging",
+      "status": "texting",
+      "id": 22
     }
   ]
 }

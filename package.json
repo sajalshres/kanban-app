@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sajalshres/kanban-app#readme",
   "dependencies": {
     "backbone": "^1.4.0",
+    "backbone.marionette": "^4.1.2",
     "jquery": "^3.5.1",
     "json-server": "^0.16.1",
     "underscore": "^1.10.2",
