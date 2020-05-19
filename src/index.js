@@ -4,6 +4,53 @@ var Collection = require('./collections/collection')
 var _ = require('underscore')
 var $ = require('jquery')
 
+var tempArray = [];
+var lanesView = Backbone.View.extend({
+    events: {
+        "click .addLaneInputEnable": "onAddLane",
+        "input .laneInput": "syncer",
+        "click .cancel": "onCancel",
+        "click .create": "onCreate"
+    },
+    onCreate: function () {
+        event.stopPropagation();
+        tempArray.push(this.myPublic);
+        var selector = "#" + this.myPublic;
+        var div = document.createElement("div");
+        div.id = this.myPublic;
+        document.body.appendChild(div);
+        (new TodosView({ el: selector, model: tasks, option: this.myPublic })).render();
+        this.render();
+    },
+    onCancel: function (event) {
+        event.stopPropagation();
+        this.render()
+    },
+    syncer: function () {
+        document.getElementById("createBtn").disabled = false;
+        this.myPublic = document.getElementById("laneName").value
+        console.log(this.myPublic);
+        if (this.myPublic === "" || (_.contains(tempArray, this.myPublic))) {
+            document.getElementById("createBtn").disabled = true;
+        }
+    },
+    onAddLane: function () {
+        console.log("clicked");
+        var template = _.template($("#inputLaneTemplate").html());
+        var html = template();
+        this.$el.html(html);
+        document.getElementById("createBtn").disabled = true;
+    },
+    initialize: function () {
+        this.myPublic = ""
+        console.log("lane view created")
+    },
+    render: function () {
+        var template = _.template($("#addLaneTemplate").html());
+        var html = template();
+        this.$el.html(html);
+    }
+})
 var TodosView = Backbone.View.extend({
     events: {
         'change input#newTask': 'loadTask'
@@ -25,6 +72,7 @@ var TodosView = Backbone.View.extend({
         })
     },
     initialize: function (option) {
+        console.log("ya samma chalyo")
         this.myPublic = option.option;
         this.model.on("remove", this.render, this);
         this.model.on("add", this.render, this);
@@ -33,7 +81,7 @@ var TodosView = Backbone.View.extend({
     render: function () {
         this.$el.html("");
         var template = _.template($("#inputTemplate").html());
-        var html = template({status: this.myPublic});
+        var html = template({ status: this.myPublic });
         this.$el.html(html);
         var self = this;
         this.model.each(function (task) {
@@ -71,7 +119,7 @@ var TodoView = Backbone.View.extend({
         tasks.remove(this.model);
         this.model.destroy();
     },
-    onClickEdit: function(e){
+    onClickEdit: function (e) {
         e.stopPropagation();
         var template = _.template($("#editTemplate").html());
         var html = template(this.model.toJSON());
@@ -79,21 +127,21 @@ var TodoView = Backbone.View.extend({
         document.getElementById("edit").style.visibility = "hidden";
 
     },
-    editTask: function(event){
+    editTask: function (event) {
         event.stopPropagation();
         console.log("editTask clicked")
         this.model.set("title", this.myPublic);
         this.model.save(null, {
-            success: function(){
+            success: function () {
                 console.log("edit success");
                 tasks.fetch();
             },
-            error:function(){
+            error: function () {
                 console.log("server down")
             }
         })
     },
-    onClickCancel: function(event){
+    onClickCancel: function (event) {
         event.stopPropagation();
         console.log("cancel clicked")
         this.render();
@@ -118,7 +166,6 @@ var TodoView = Backbone.View.extend({
 function checker() {
     tasks.fetch({
         success: function () {
-            var tempArray = [];
             for (var i = 0; i < tasks.length; i++) {
                 if (!(_.contains(tempArray, tasks.at(i).get("status")))) {
                     tempArray.push(tasks.at(i).get("status"))
@@ -138,5 +185,13 @@ function checker() {
         }
     })
 }
+
+
+
+var div = document.createElement("div");
+div.id = "addLane";
+document.body.appendChild(div);
+var newLanesView = new lanesView({ el: "#addLane" });
 var tasks = new Collection.Tasks();
+newLanesView.render();
 checker();

@@ -58,9 +58,14 @@
       "id": 18
     },
     {
-      "title": "hello world program complete",
+      "title": "hello world program completed",
       "status": "done",
       "id": 19
+    },
+    {
+      "title": "Javascript Documentation",
+      "status": "Archive",
+      "id": 20
     }
   ]
 }

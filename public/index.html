@@ -7,6 +7,9 @@
 </head>
 
 <body>
+  <!-- <div id="newLane"><div>
+    <br>
+    <br> -->
 
   <script id="todoTemplate" type="text/html">
       <%= title%>
@@ -23,7 +26,17 @@
     <button class="cancel">Cancel</button>
     <button type="submit" class="editText" id="edit">Edit</button>
   </script>
-
+  <script id="addLaneTemplate" type="text/html">
+    <button class="addLaneInputEnable" id="addBtn">Add Lane</button>
+    <br>
+    <br>
+ </script>
+  <script id="inputLaneTemplate" type="text/html">
+  <input class="laneInput" id="laneName">
+  <button class="create" id="createBtn">Create</button><button class="cancel" id="cancelBtn">Cancel</button>
+  <br>
+  <br>
+ </script>
   <script src="bundle.js"></script>
 
 </body>
