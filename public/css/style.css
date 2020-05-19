@@ -1,3 +1,20 @@
 
 
 /*# sourceMappingURL=style.css.map */
+
+
+#tasks{
+    padding:0.4rem;
+
+}
+.card{
+    background-color: red;
+    border:1px solid #3f0303;
+    border-radius: 5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding:0.4rem;
+    
+}
