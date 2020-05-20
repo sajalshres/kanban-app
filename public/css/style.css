@@ -112,6 +112,10 @@ option{
   cursor: pointer;
 }
 
+/* option :active{
+  background-color: blue;
+} */
+
 #selectId{
   border:none;
   margin-top: 2px;
