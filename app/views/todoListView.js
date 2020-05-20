@@ -5,11 +5,16 @@ var Backbone = require('backbone');
  var model = require('../models/model');
  var $ = require('jquery');
  var _ = require('underscore');
+ var inputActive = false;
 
 var tasks = new Collection.Tasks();
  var TodosView = Backbone.View.extend({
     events: {
-        'change input#newTask': 'loadTask'
+        'change input#newTask': 'loadTask',
+        "click #add":"newTodo",
+        "contextmenu .each-task": "newMenu",
+        "click #newTodo": "toggleInputField",
+        "click #cancelTodo":"cancelTodo",
     },
     loadTask: function (event){
         var val = $(event.currentTarget).val();
@@ -28,6 +33,38 @@ var tasks = new Collection.Tasks();
                 // console.log("model saving failed")
             }
         })
+    },
+    newTodo: function (event) {
+    
+        this.toggleInputField();
+    
+
+    },
+    cancelTodo: function () {
+        this.toggleInputField();
+    },
+    toggleInputField: function (){
+        if(!inputActive){
+        $("#inputField").show();
+        $("newTodo").hide();
+        inputActive=true;
+        }
+        else{
+            $("newTodo").show();
+            $("#inputField").hide();
+           
+            inputActive=false;
+        }
+
+       
+    },
+    newMenu: function(event) {
+        event.preventDefault()
+        $(".custom-menu").css({
+          "top": `${event.clientY + 30}px`,
+          "left": `${event.clientX + 30}px`,
+          "display": "block"
+        });
     },
     initialize:  function (option) {
         this.myPublic = option.option;

@@ -3,20 +3,36 @@
 <html>
 
 <head>
-  <!-- Using the 'async' attribute will keep our script from blocking the page load. -->
-  <link rel="stylesheet" href="public/css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+  <!-- <div id="newLane"><div>
+    <br>
+    <br> -->
+  <div id ="addLane"> </div>
+
+  <div id ="contain"></div>
 
   <script id="todoTemplate" type="text/html">
-      <%= title%>
-      <button class="remove">remove</button><button class = "edit">edit</button>
+     <div id ="tasks">  <%= title%> </div>
+      
+      <div class="custom-menu">
+        <button class="remove">remove</button>
+        <button class = "edit">edit</button>
+       
+      </div>
   </script>
   <script id="inputTemplate" type="text/html">
-        <label><%= status%> Task:</label>
-        <input type="text" id="newTask" name="fname">
-        <input type="submit" value="add">  
+        <label class="header"><%= status%>  <i id = "newTodo" class="fa fa-plus" ></i> </label>
+        <div id ="inputField"> 
+            <input type="text" id="newTask" name="fname">
+              <div class ="new-task-button">
+                <button class="btn btn-add"  id="add">add </button>
+                <button class="btn btn-cancel" id="cancelTodo"> cancel</button>
+              </div>
+        </div>
   </script>
 
   <script id="editTemplate" type="text/html">
@@ -24,7 +40,17 @@
     <button class="cancel">Cancel</button>
     <button type="submit" class="editText" id="edit">Edit</button>
   </script>
-
+  <script id="addLaneTemplate" type="text/html">
+    <button class="addLaneInputEnable" id="addBtn">Add Lane</button>
+    <br>
+    <br>
+ </script>
+  <script id="inputLaneTemplate" type="text/html">
+  <input class="laneInput" id="laneName">
+  <button class="create" id="createBtn">Create</button><button class="cancel" id="cancelBtn">Cancel</button>
+  <br>
+  <br>
+ </script>
   <script src="bundle.js"></script>
 
 </body>

@@ -1,84 +1,91 @@
 {
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
   "tasks": [
     {
-      "title": "github account creation",
-      "status": "todo",
-      "id": 2
-    },
-    {
-      "title": "database configuration",
-      "status": "todo",
-      "id": 5
-    },
-    {
-      "title": "dockerhub account creation",
+      "title": "dockerhub account creations",
       "status": "todo",
       "id": 6
     },
     {
-      "title": "Commit last change",
-      "status": "progress",
-      "id": 8
-    },
-    {
-      "title": "virtual linux setup",
-      "status": "todo",
-      "id": 9
-    },
-    {
-      "title": "CSS editing",
+      "title": "CSS editing and testing",
       "status": "progress",
       "id": 10
     },
     {
-      "title": "Ticket assign",
-      "status": "done",
-      "id": 11
-    },
-    {
-      "title": "CRUD operation",
-      "status": "done",
-      "id": 13
-    },
-    {
-      "title": "Data Structuring",
+      "title": "edit button",
       "status": "progress",
-      "id": 14
-    },
-    {
-      "title": "Postman Installation",
-      "status": "done",
-      "id": 15
-    },
-    {
-      "title": "d",
-      "status": "todo",
-      "id": 16
-    },
-    {
-      "title": "s",
-      "status": "todo",
       "id": 17
     },
     {
-      "title": "",
-      "status": "todo",
+      "title": "Username completedz",
+      "status": "done",
       "id": 18
     },
     {
-      "title": "f",
-      "status": "todo",
+      "title": "hello world program completed",
+      "status": "done",
       "id": 19
     },
     {
-      "title": "fg",
-      "status": "todo",
+      "title": "Javascript Documentation",
+      "status": "Archive",
       "id": 20
     },
     {
-      "title": "hj",
+      "title": "zoom",
       "status": "progress",
       "id": 21
+    },
+    {
+      "title": "uyuyuy",
+      "status": "todo",
+      "id": 23
+    },
+    {
+      "title": "hello world program completed",
+      "status": "done",
+      "id": 50
+    },
+    {
+      "title": "hjhjhjhjh",
+      "status": "todo",
+      "id": 52
+    },
+    {
+      "title": "ghhghg",
+      "status": "todo",
+      "id": 54
+    },
+    {
+      "title": "hhfg",
+      "status": "todo",
+      "id": 57
+    },
+    {
+      "title": "ghgh",
+      "status": "todo",
+      "id": 58
+    },
+    {
+      "title": "create github account",
+      "status": "progress",
+      "id": 59
     }
   ]
 }
