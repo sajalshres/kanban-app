@@ -59,14 +59,34 @@ var lanesView = Backbone.View.extend({
 })
 var TodosView = Backbone.View.extend({
     events: {
-        'change input#newTask': 'loadTask',
+        // 'change input#newTask': 'loadTask',
         "click #add":"newTodo",
         "click #newTodo": "toggleInputField",
         "click #cancelTodo":"cancelTodo",
        
     },
-    loadTask: function (event) {
-        var val = $(event.currentTarget).val();
+    // loadTask: function (event) {
+    //     var val = $(event.currentTarget).val();
+    //     var newModel = new Model.Task();
+    //     var self = this;
+    //     newModel.set("title", val);
+    //     newModel.set("status", self.myPublic);
+    //     newModel.save(null, {
+    //         success: function () {
+    //             console.log("model saved")
+    //             tasks.fetch();
+    //         },
+    //         error: function () {
+    //             console.log("model saving failed")
+    //         }
+    //     })
+    // },
+    newTodo: function (event) {
+        var val = $("#newTask").val();
+        if(val.length <2  ){
+            alert ("todo mustnot be empty");
+            return ;
+        }
         var newModel = new Model.Task();
         var self = this;
         newModel.set("title", val);
@@ -80,13 +100,11 @@ var TodosView = Backbone.View.extend({
                 console.log("model saving failed")
             }
         })
-    },
-    newTodo: function (event) {
-    
         this.toggleInputField();
-    
-
     },
+    
+        
+    
     cancelTodo: function () {
         this.toggleInputField();
     },
