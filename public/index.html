@@ -18,7 +18,9 @@
       <!-- <button class="remove">remove</button><button class = "edit">edit</button> -->
   </script>
   <script id="inputTemplate" type="text/html">
-    <label class="header"><%= status%>  <i id = "newTodo" class="fa fa-plus" ></i> </label>
+    <label class="header"><%= status%> <% if (status== "todo") { %>
+      <i id = "newTodo" class="fa fa-plus" ></i>
+  <% } %></label>
     <div id ="inputField"> 
       <input type="text" id="newTask" name="fname">
         <div class ="new-task-button">

@@ -273,3 +273,7 @@ var newLanesView = new lanesView({ el: "#addLane" });
 var tasks = new Collection.Tasks();
 newLanesView.render();
 checker();
+
+document.onmouseover = function(e) {
+    console.log(e.target.className);
+};
