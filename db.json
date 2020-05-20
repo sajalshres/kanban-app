@@ -33,19 +33,9 @@
       "id": 19
     },
     {
-      "title": "Marionette Documentationk",
-      "status": "Archive",
-      "id": 23
-    },
-    {
       "title": "Backbone Documentation",
       "status": "Archive",
       "id": 26
-    },
-    {
-      "title": "database configuration",
-      "status": "todo",
-      "id": 28
     },
     {
       "title": "hello world",
@@ -56,6 +46,31 @@
       "title": "CSS editing and testing",
       "status": "Accounts",
       "id": 30
+    },
+    {
+      "title": "fgfg",
+      "status": "todo",
+      "id": 31
+    },
+    {
+      "title": "Marionette Documentationk",
+      "status": "done",
+      "id": 32
+    },
+    {
+      "title": "ggfgfg",
+      "status": "todo",
+      "id": 33
+    },
+    {
+      "title": "gfgfgfgf",
+      "status": "todo",
+      "id": 34
+    },
+    {
+      "title": "fg",
+      "status": "todo",
+      "id": 35
     }
   ]
 }

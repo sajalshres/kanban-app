@@ -3,8 +3,10 @@ var Model = require('./models/model');
 var Collection = require('./collections/collection')
 var _ = require('underscore')
 var $ = require('jquery')
+var tempArray =[];
+var inputActive = false;
 
-var tempArray = [];
+
 var lanesView = Backbone.View.extend({
     events: {
         "click .addLaneInputEnable": "onAddLane",
@@ -18,7 +20,8 @@ var lanesView = Backbone.View.extend({
         var selector = "#" + this.myPublic;
         var div = document.createElement("div");
         div.id = this.myPublic;
-        document.body.appendChild(div);
+        div.className="card";
+        $("#contain").append(div);
         (new TodosView({ el: selector, model: tasks, option: this.myPublic })).render();
         this.render();
     },
@@ -53,7 +56,11 @@ var lanesView = Backbone.View.extend({
 })
 var TodosView = Backbone.View.extend({
     events: {
-        'change input#newTask': 'loadTask'
+        'change input#newTask': 'loadTask',
+        "click #add":"newTodo",
+        "click #newTodo": "toggleInputField",
+        "click #cancelTodo":"cancelTodo",
+       
     },
     loadTask: function (event) {
         var val = $(event.currentTarget).val();
@@ -70,6 +77,30 @@ var TodosView = Backbone.View.extend({
                 console.log("model saving failed")
             }
         })
+    },
+    newTodo: function (event) {
+    
+        this.toggleInputField();
+    
+
+    },
+    cancelTodo: function () {
+        this.toggleInputField();
+    },
+    toggleInputField: function (){
+        if(!inputActive){
+        $("#inputField").show();
+        $("newTodo").hide();
+        inputActive=true;
+        }
+        else{
+            $("newTodo").show();
+            $("#inputField").hide();
+           
+            inputActive=false;
+        }
+
+       
     },
     initialize: function (option) {
         console.log("ya samma chalyo")
@@ -95,10 +126,12 @@ var TodosView = Backbone.View.extend({
 })
 var TodoView = Backbone.View.extend({
     events: {
+
         "click .remove": "onClickRemove",
         "input .editTask": "syncer",
         "click .cancel": "onClickCancel",
-        "click .editText": "editTask"
+        "click .editText": "editTask",
+       
     },
     insert: function () {
         console.log('submit done');
@@ -134,7 +167,8 @@ var TodoView = Backbone.View.extend({
     tagName: "div",
     attributes: function () {
         return {
-            id: this.model.get('title')
+            id: this.model.get('title'),
+            class: "each-task",
         }
     },
     initialize: function () {
@@ -175,7 +209,7 @@ var TodoView = Backbone.View.extend({
         var html = template(this.model.toJSON());
         this.$el.html(html);
         var self = $("<select id='selectId'>");
-        self.append("<option selected>..</option>");
+        self.append("<option selected></option>");
         self.append("<option value='remove'>Remove</option>");
         self.append("<option value='edit'>Edit</option>");
 
@@ -201,7 +235,8 @@ function checker() {
                 var selector = "#" + i;
                 var div = document.createElement("div");
                 div.id = i;
-                document.body.appendChild(div);
+                div.className="card";
+                $("#contain").append(div);
                 (new TodosView({ el: selector, model: tasks, option: i })).render();
             }
         },

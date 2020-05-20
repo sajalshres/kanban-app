@@ -6,20 +6,26 @@
   <!-- Using the 'async' attribute will keep our script from blocking the page load. -->
 </head>
 <link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
   <!-- <div id="newLane"><div>
     <br>
     <br> -->
-
+    <div id ="contain"></div>
   <script id="todoTemplate" type="text/html">
       <label><%= title%><label>
       <!-- <button class="remove">remove</button><button class = "edit">edit</button> -->
   </script>
   <script id="inputTemplate" type="text/html">
-        <label><%= status%> Task:</label>
-        <input type="text" id="newTask" name="fname">
-        <input type="submit" value="add">  
+    <label class="header"><%= status%>  <i id = "newTodo" class="fa fa-plus" ></i> </label>
+    <div id ="inputField"> 
+      <input type="text" id="newTask" name="fname">
+        <div class ="new-task-button">
+          <button class="btn btn-add"  id="add">add </button>
+          <button class="btn btn-cancel" id="cancelTodo"> cancel</button>
+        </div>
+  </div> 
   </script>
 
   <script id="editTemplate" type="text/html">
