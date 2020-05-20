@@ -74,11 +74,22 @@ var TodoView = Marionete.LayoutView.extend({
 
 
     },
-    render: function () {
+    render: function (option) {
+        var tempArray = option.tempArray
+        var pointer = this;
         var template = _.template($("#todoTemplate").html());
         var html = template(this.model.toJSON());
-        console.log("html" + html)
         this.$el.html(html);
+        var self = $(`<div class="custom-menu"> </div>`);
+        self.append(`<button class="remove">remove</button>`);
+        self.append(`<button class="remove">remove</button>`);
+
+        $.each(tempArray, function (index, value) {
+            if (pointer.model.get("status") != value) {
+                self.append(`<button class ="move" > ${value} </button>`)
+            }
+        });
+        this.$el.append(self)
         return this;
     }
 });

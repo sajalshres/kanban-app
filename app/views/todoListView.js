@@ -68,6 +68,7 @@ var tasks = new Collection.Tasks();
     },
     initialize:  function (option) {
         this.myPublic = option.option;
+        tempArray = option.tempArray;
         console.log(option);
         this.model.on("remove", this.render, this);
         this.model.on("add", this.render, this);
@@ -83,7 +84,7 @@ var tasks = new Collection.Tasks();
         this.model.each(function (task) {
             if (task.get("status") === self.myPublic) {
                 var todoView = new TodoView({ model: task });
-                self.$el.append(todoView.render().$el)
+                self.$el.append(todoView.render(tempArray).$el)
             }
         })
         self.$el.append("<br>")

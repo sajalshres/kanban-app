@@ -20,7 +20,7 @@ checker = () => {
                 div.id=i;
                 div.className="card";
                 $("#contain").append(div);
-                (new TodosView({ el: selector, model: tasks, option: i })).render();
+                (new TodosView({ el: selector, model: tasks, option: i,tempArray })).render();
             }
         },error: () => {
             console.log("server down")
