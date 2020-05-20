@@ -61,9 +61,9 @@ var tasks = new Collection.Tasks();
     newMenu: function(event) {
         event.preventDefault()
         $(".custom-menu").css({
-          "top": `${event.clientY + 30}px`,
-          "left": `${event.clientX + 30}px`,
-          "display": "block"
+          "top": `${event.clientY + 5}px`,
+          "left": `${event.clientX + 5}px`,
+          "visibility": "visible"
         });
     },
     initialize:  function (option) {

@@ -10,33 +10,21 @@ var tasks = new collection.Tasks();
 var TodoView = Marionete.LayoutView.extend({
     events: {
         "click .remove": "onClickRemove",
-        "click .edit": "onClickEdit",
         "input .editTask": "syncer",
         "click .cancel": "onClickCancel",
-        "click .editText": "editTask",
+        "click .editText": "editTask"
     },
     insert: function () {
-        console.log('submit done')
+        console.log('submit done');
     },
     syncer: function () {
         this.myPublic = document.getElementById("editor").value
         document.getElementById("edit").style.visibility = "visible";
-        alert('ok');
+        console.log(this.myPublic);
     },
-
-    onClickRemove: function (e) {
-        console.log('submit done')
+    onClick: function (e) {
         e.stopPropagation();
-        tasks.remove(this.model);
-        this.model.destroy();
-    },
-    onClickEdit: function (e) {
-        e.stopPropagation();
-        var template = _.template($("#editTemplate").html());
-        var html = template(this.model.toJSON());
-        this.$el.html(html);
-        document.getElementById("edit").style.visibility = "hidden";
-
+        console.log("item clicked")
     },
     editTask: function (event) {
         event.stopPropagation();
@@ -58,7 +46,6 @@ var TodoView = Marionete.LayoutView.extend({
         this.render();
     },
 
-
     tagName: "div",
     attributes: function () {
         return {
@@ -70,23 +57,51 @@ var TodoView = Marionete.LayoutView.extend({
     },
     initialize: function () {
         this.model.on("change", this.render, this);
+        var self = this;
+        this.$el.on('input', '.custom-menu', function () {
+            console.log("triggered")
+            if (this.value == "remove") {
+                tasks.remove(self.model);
+                self.model.destroy();
+            } else if (this.value == "edit") {
+                var template = _.template($("#editTemplate").html());
+                var html = template(self.model.toJSON());
+                self.$el.html(html);
+                document.getElementById("edit").style.visibility = "hidden";
+            }else{
+                var clone = new Model.Task();
+                clone.set("title", self.model.get("title"));
+                clone.set("status", this.value);
+                tasks.remove(self.model);
+                self.model.destroy();
+                clone.save(null, {
+                    success:function(){
+                        console.log("moving success");
+                        tasks.fetch()
+                        self.render();
+                    }
+                })
+            }
+        })
+        console.log(this)
+
         this.id = this.model.toJSON().title;
-
-
     },
     render: function (option) {
-        var tempArray = option.tempArray
+       
+        console.log(tempArray);
         var pointer = this;
         var template = _.template($("#todoTemplate").html());
         var html = template(this.model.toJSON());
         this.$el.html(html);
         var self = $(`<div class="custom-menu"> </div>`);
-        self.append(`<button class="remove">remove</button>`);
-        self.append(`<button class="remove">remove</button>`);
+        self.append("<option selected>..</option>");
+        self.append("<option value='remove'>Remove</option>");
+        self.append("<option value='edit'>Edit</option>");
 
         $.each(tempArray, function (index, value) {
             if (pointer.model.get("status") != value) {
-                self.append(`<button class ="move" > ${value} </button>`)
+                self.append("<option value='" + value + "'>" + "Move to " + value + "</option>")
             }
         });
         this.$el.append(self)

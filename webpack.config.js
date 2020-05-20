@@ -18,9 +18,9 @@ module.exports = {
       }
     ]
   },
-  // devServer: {
-  //   contentBase: PUBLIC_PATH
-  // },
+  devServer: {
+    contentBase: PUBLIC_PATH
+  },
   plugins: [
     new webpack.ProvidePlugin({
       _: 'underscore'

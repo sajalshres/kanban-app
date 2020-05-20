@@ -48,15 +48,16 @@
 }
 
 .custom-menu{
-    z-index:1000;
+    z-index:100;
     display:flex;
-    justify-content:space-evenly;
+    justify-content:center;
     align-items: center;
     flex-direction: column;
-    border: 1px solid black;
-    height:3rem;
-    width:4rem;
-    display: none;
+    border: 1px solid #bfe6ff;
+    visibility: hidden;
+    position: absolute;
+   
+    
     
 }
 
@@ -101,5 +102,13 @@ button {
 
 #inputField{
     display:none;
+}
+
+option{
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
