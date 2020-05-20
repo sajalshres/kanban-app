@@ -15,6 +15,9 @@ var lanesView = Backbone.View.extend({
     onCreate: function () {
         event.stopPropagation();
         tempArray.push(this.myPublic);
+        var TriggerModel = new Model.Task({title: null, status:null})
+        tasks.add(TriggerModel);
+        tasks.remove(TriggerModel);
         var selector = "#" + this.myPublic;
         var div = document.createElement("div");
         div.id = this.myPublic;

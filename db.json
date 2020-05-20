@@ -18,11 +18,6 @@
   },
   "tasks": [
     {
-      "title": "github account creation",
-      "status": "todo",
-      "id": 2
-    },
-    {
       "title": "dockerhub account creations",
       "status": "progress",
       "id": 6
@@ -33,7 +28,7 @@
       "id": 19
     },
     {
-      "title": "Marionette Documentationk",
+      "title": "Marionette Documentation",
       "status": "Archive",
       "id": 23
     },
@@ -43,19 +38,19 @@
       "id": 26
     },
     {
-      "title": "database configuration",
+      "title": "database configuration and deploy",
       "status": "todo",
       "id": 28
-    },
-    {
-      "title": "hello world",
-      "status": "done",
-      "id": 29
     },
     {
       "title": "CSS editing and testing",
       "status": "Accounts",
       "id": 30
+    },
+    {
+      "title": "hii",
+      "status": "Archive",
+      "id": 31
     }
   ]
 }
