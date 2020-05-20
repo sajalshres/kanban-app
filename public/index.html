@@ -5,6 +5,7 @@
 <head>
   <!-- Using the 'async' attribute will keep our script from blocking the page load. -->
 </head>
+<link rel="stylesheet" href="./css/style.css">
 
 <body>
   <!-- <div id="newLane"><div>
@@ -12,8 +13,8 @@
     <br> -->
 
   <script id="todoTemplate" type="text/html">
-      <%= title%>
-      <button class="remove">remove</button><button class = "edit">edit</button>
+      <label><%= title%><label>
+      <!-- <button class="remove">remove</button><button class = "edit">edit</button> -->
   </script>
   <script id="inputTemplate" type="text/html">
         <label><%= status%> Task:</label>

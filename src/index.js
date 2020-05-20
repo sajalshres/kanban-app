@@ -95,15 +95,13 @@ var TodosView = Backbone.View.extend({
 })
 var TodoView = Backbone.View.extend({
     events: {
-        "click": "onClick",
         "click .remove": "onClickRemove",
-        "click .edit": "onClickEdit",
         "input .editTask": "syncer",
         "click .cancel": "onClickCancel",
         "click .editText": "editTask"
     },
     insert: function () {
-        console.log('submit done')
+        console.log('submit done');
     },
     syncer: function () {
         this.myPublic = document.getElementById("editor").value
@@ -113,19 +111,6 @@ var TodoView = Backbone.View.extend({
     onClick: function (e) {
         e.stopPropagation();
         console.log("item clicked")
-    },
-    onClickRemove: function (e) {
-        e.stopPropagation();
-        tasks.remove(this.model);
-        this.model.destroy();
-    },
-    onClickEdit: function (e) {
-        e.stopPropagation();
-        var template = _.template($("#editTemplate").html());
-        var html = template(this.model.toJSON());
-        this.$el.html(html);
-        document.getElementById("edit").style.visibility = "hidden";
-
     },
     editTask: function (event) {
         event.stopPropagation();
@@ -154,12 +139,52 @@ var TodoView = Backbone.View.extend({
     },
     initialize: function () {
         this.model.on("change", this.render, this);
+        var self = this;
+        this.$el.on('input', '#selectId', function () {
+            console.log("triggered")
+            if (this.value == "remove") {
+                tasks.remove(self.model);
+                self.model.destroy();
+            } if (this.value == "edit") {
+                var template = _.template($("#editTemplate").html());
+                var html = template(self.model.toJSON());
+                self.$el.html(html);
+                document.getElementById("edit").style.visibility = "hidden";
+            }else{
+                var clone = new Model.Task();
+                clone.set("title", self.model.get("title"));
+                clone.set("status", this.value);
+                tasks.remove(self.model);
+                self.model.destroy();
+                clone.save(null, {
+                    success:function(){
+                        console.log("moving success");
+                        tasks.fetch()
+                        self.render();
+                    }
+                })
+            }
+        })
+        console.log(this)
+
         this.id = this.model.toJSON().title;
     },
     render: function () {
+        var pointer = this;
         var template = _.template($("#todoTemplate").html());
         var html = template(this.model.toJSON());
         this.$el.html(html);
+        var self = $("<select id='selectId'>");
+        self.append("<option selected>..</option>");
+        self.append("<option value='remove'>Remove</option>");
+        self.append("<option value='edit'>Edit</option>");
+
+        $.each(tempArray, function (index, value) {
+            if (pointer.model.get("status") != value) {
+                self.append("<option value='" + value + "'>" + "Move to " + value + "</option>")
+            }
+        });
+        this.$el.append(self)
         return this;
     }
 })
@@ -185,9 +210,6 @@ function checker() {
         }
     })
 }
-
-
-
 var div = document.createElement("div");
 div.id = "addLane";
 document.body.appendChild(div);

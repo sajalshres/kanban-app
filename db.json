@@ -29,13 +29,8 @@
     },
     {
       "title": "dockerhub account creations",
-      "status": "todo",
-      "id": 6
-    },
-    {
-      "title": "Commit",
       "status": "progress",
-      "id": 8
+      "id": 6
     },
     {
       "title": "CSS editing and testing",
@@ -43,18 +38,8 @@
       "id": 10
     },
     {
-      "title": "Add Columnss",
-      "status": "todo",
-      "id": 16
-    },
-    {
-      "title": "edit button",
-      "status": "progress",
-      "id": 17
-    },
-    {
-      "title": "Username completedz",
-      "status": "done",
+      "title": "Username completed",
+      "status": "Accounts",
       "id": 18
     },
     {
@@ -64,18 +49,28 @@
     },
     {
       "title": "Javascript Documentation",
-      "status": "Archive",
+      "status": "done",
       "id": 20
     },
     {
-      "title": "zoom",
-      "status": "progress",
-      "id": 21
+      "title": "Marionette Documentationk",
+      "status": "Archive",
+      "id": 23
     },
     {
-      "title": "messaging",
-      "status": "texting",
-      "id": 22
+      "title": "Dockerhub",
+      "status": "Accounts",
+      "id": 25
+    },
+    {
+      "title": "Backbone Documentation",
+      "status": "Archive",
+      "id": 26
+    },
+    {
+      "title": "sdafjlkajlsdf",
+      "status": "Accounts",
+      "id": 27
     }
   ]
 }
