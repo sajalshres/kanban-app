@@ -1,11 +1,123 @@
-body {
-    background-color: lightblue;
-    color: darkblue;
-    font-size: 18px;
-  }
 
-.addLaneInputEnable{
-    background-color: lightblue;
-    color: darkblue;
-    font-size: 18px;
+
+/*# sourceMappingURL=style.css.map */
+#contain{
+  display:flex;
+  flex-direction: row;
+  
 }
+.card{
+  display:flex;
+  justify-content: flex-start;
+  border: 1px solid #676767;
+  border-left:none;
+  flex-direction: column;
+  background-color:#EAECEF;
+  max-width: 300px;
+  width:200px;
+  padding:5px;
+ 
+
+}
+
+#contain:first-child{
+  border-left: 1px solid #676767;
+
+}
+
+.header{
+  display:flex;
+  height:3rem;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 2px solid #676767;
+  background-color: beige;
+  margin:0;
+  padding:0;
+
+}
+
+.each-task {
+  height:3rem;
+  padding:4px;
+  background-color:white;
+  border:1px solid #bfe6ff;
+  border-radius: 5px;
+  margin:2px;
+  justify-content: center;
+}
+
+.custom-menu{
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #bfe6ff;
+  visibility: hidden;
+  position: absolute;
+ 
+  
+  
+}
+
+#newTask {
+  height:3rem;
+  border-radius: 5px;
+  border: 1px solid #bfe6ff;
+  margin-top: 1rem;
+  align-self: center;
+  margin-left:1rem;;
+
+}
+
+.new-task-button {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  
+ 
+}
+.btn {
+height:1.5rem;
+justify-content: center;
+align-items: center;
+width:5rem;
+
+}
+
+.btn-add {
+  background-color: green;
+  color:white;
+  
+}
+.btn-cancel {
+  background-color: grey;
+  color:white;
+}
+button {
+  background-color: whitesmoke;
+}
+
+#inputField{
+  display:none;
+}
+
+option{
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* option :active{
+  background-color: blue;
+} */
+
+#selectId{
+  border:none;
+  margin-top: 2px;
+}
+

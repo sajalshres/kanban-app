@@ -28,19 +28,9 @@
       "id": 19
     },
     {
-      "title": "Marionette Documentation",
-      "status": "Archive",
-      "id": 23
-    },
-    {
       "title": "Backbone Documentation",
       "status": "Archive",
       "id": 26
-    },
-    {
-      "title": "database configuration and deploy",
-      "status": "todo",
-      "id": 28
     },
     {
       "title": "CSS editing and testing",
@@ -48,9 +38,29 @@
       "id": 30
     },
     {
-      "title": "hii",
-      "status": "Archive",
+      "title": "fgfg",
+      "status": "todo",
       "id": 31
+    },
+    {
+      "title": "Marionette Documentationk ghgjhgjhgjhgjhgjhgh",
+      "status": "done",
+      "id": 32
+    },
+    {
+      "title": "ggfgfg",
+      "status": "todo",
+      "id": 33
+    },
+    {
+      "title": "gfgfgfgf",
+      "status": "todo",
+      "id": 34
+    },
+    {
+      "title": "learn somethng and then something and something ",
+      "status": "todo",
+      "id": 37
     }
   ]
 }
