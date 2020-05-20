@@ -23,24 +23,9 @@
       "id": 2
     },
     {
-      "title": "database configuration",
-      "status": "todo",
-      "id": 5
-    },
-    {
       "title": "dockerhub account creations",
       "status": "progress",
       "id": 6
-    },
-    {
-      "title": "CSS editing and testing",
-      "status": "progress",
-      "id": 10
-    },
-    {
-      "title": "Username completed",
-      "status": "Accounts",
-      "id": 18
     },
     {
       "title": "hello world program completed",
@@ -48,19 +33,9 @@
       "id": 19
     },
     {
-      "title": "Javascript Documentation",
-      "status": "done",
-      "id": 20
-    },
-    {
       "title": "Marionette Documentationk",
       "status": "Archive",
       "id": 23
-    },
-    {
-      "title": "Dockerhub",
-      "status": "Accounts",
-      "id": 25
     },
     {
       "title": "Backbone Documentation",
@@ -68,9 +43,19 @@
       "id": 26
     },
     {
-      "title": "sdafjlkajlsdf",
+      "title": "database configuration",
+      "status": "todo",
+      "id": 28
+    },
+    {
+      "title": "hello world",
+      "status": "done",
+      "id": 29
+    },
+    {
+      "title": "CSS editing and testing",
       "status": "Accounts",
-      "id": 27
+      "id": 30
     }
   ]
 }

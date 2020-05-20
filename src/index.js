@@ -145,7 +145,7 @@ var TodoView = Backbone.View.extend({
             if (this.value == "remove") {
                 tasks.remove(self.model);
                 self.model.destroy();
-            } if (this.value == "edit") {
+            } else if (this.value == "edit") {
                 var template = _.template($("#editTemplate").html());
                 var html = template(self.model.toJSON());
                 self.$el.html(html);
