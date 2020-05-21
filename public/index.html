@@ -12,15 +12,18 @@
   <!-- <div id="newLane"><div>
     <br>
     <br> -->
-    <div id ="contain"></div>
+  <div id="contain"></div>
   <script id="todoTemplate" type="text/html">
       <label><%= title%><label>
       <!-- <button class="remove">remove</button><button class = "edit">edit</button> -->
   </script>
   <script id="inputTemplate" type="text/html">
-    <label class="header"><%= status%> <% if (status== "todo") { %>
+    <label class="header">
+     <h4> <%= status%> </h4>
+      <!-- <% if (status== "todo") { %> -->
       <i id = "newTodo" class="fa fa-plus" ></i>
-  <% } %></label>
+      <!-- <% } %> -->
+    </label>
     <div id ="inputField"> 
       <input type="text" id="newTask" name="fname">
         <div class ="new-task-button">

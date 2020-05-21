@@ -18,19 +18,9 @@
   },
   "tasks": [
     {
-      "title": "ggfgfg",
-      "status": "todo",
-      "id": 33
-    },
-    {
       "title": "dockerhub account creations",
       "status": "progress",
       "id": 6
-    },
-    {
-      "title": "hello world program completed",
-      "status": "done",
-      "id": 19
     },
     {
       "title": "Backbone Documentation",
@@ -43,50 +33,64 @@
       "id": 30
     },
     {
-      "title": "fgfg",
-      "status": "todo",
-      "id": 31
-    },
-    {
       "title": "Marionette Documentationk ghgjhgjhgjhgjhgjhgh",
       "status": "done",
       "id": 32
     },
-    
     {
-      "title": "gfgfgfgf",
-      "status": "todo",
-      "id": 34
-    },
-    {
-      "title": "learn somethng and then something and something ",
-      "status": "todo",
-      "id": 37
-    },
-    {
-      "title": "hghghg",
-      "status": "progress",
-      "id": 39
+      "title": "hello world program completed",
+      "status": "pow",
+      "id": 45
     },
     {
       "title": "okkk ",
-      "status": "progress",
-      "id": 40
-    },
-    {
-      "title": "hghgjghj",
-      "status": "progress",
-      "id": 42
+      "status": "pow",
+      "id": 46
     },
     {
       "title": "dgyrthg",
-      "status": "progress",
-      "id": 43
+      "status": "Archive",
+      "id": 47
+    },
+    {
+      "title": "hghgjghj",
+      "status": "pow",
+      "id": 48
     },
     {
       "title": "hello",
-      "status": "progress",
-      "id": 44
+      "status": "pow",
+      "id": 49
+    },
+    {
+      "title": "hghghgd",
+      "status": "pow",
+      "id": 50
+    },
+    {
+      "title": "gfgfgfgf",
+      "status": "done",
+      "id": 51
+    },
+    {
+      "title": "sdf",
+      "status": "todo",
+      "id": 52
+    },
+    {
+      "title": "kkljklsd",
+      "status": "Archive",
+      "id": 53
+    },
+    {
+      "title": "ggfgfg",
+      "status": "Archive",
+      "id": 54
+    },
+    {
+      "title": "fgfg",
+      "status": "Archive",
+      "id": 55
     }
   ]
 }
