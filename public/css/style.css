@@ -1,119 +1,106 @@
-
-
 /*# sourceMappingURL=style.css.map */
-#contain{
-  display:flex;
+#contain {
+  display: flex;
   flex-direction: row;
-  
 }
-.card{
-  display:flex;
+.card {
+  display: flex;
   justify-content: flex-start;
-  border: 1px solid #676767;
-  border-left:none;
+  border-left: none;
   flex-direction: column;
-  background-color:#EAECEF;
+  background-color: rgb(201, 212, 235);
   max-width: 300px;
-  width:200px;
-  padding:5px;
- 
-
+  width: 200px;
+  padding: 5px;
+  margin-right: 15px;
+  margin-bottom: 5px;
 }
 
-#contain:first-child{
+#contain:first-child {
   border-left: 1px solid #676767;
-
 }
 
-.header{
-  display:flex;
-  height:3rem;
+.header {
+  display: flex;
+  height: 3rem;
   align-items: center;
   justify-content: space-around;
   border-bottom: 2px solid #676767;
-  background-color: beige;
-  margin:0;
-  padding:0;
-
+  background-color: rgb(50, 125, 187);
+  color: white;
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 16px;
 }
 
 .each-task {
-  padding:4px;
-  background-color:white;
-  border:1px solid #bfe6ff;
+  padding: 4px;
+  background-color: rgb(246, 252, 183);
   border-radius: 5px;
-  margin:2px;
+  margin: 4px;
   justify-content: center;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
   overflow: hidden;
 }
 
-#selectId{
+#selectId {
   position: relative;
-  border:none;
-  width:16px;
-  }
-  
+  border: none;
+  width: 16px;
+  color: rgb(161, 228, 181);
+}
 
-.custom-menu{
-  z-index:100;
-  display:flex;
-  justify-content:center;
+.custom-menu {
+  z-index: 100;
+  display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   border: 1px solid #bfe6ff;
   visibility: hidden;
   position: absolute;
- 
-  
-  
 }
 
 #newTask {
-  height:3rem;
+  height: 3rem;
   border-radius: 5px;
   border: 1px solid #bfe6ff;
   margin-top: 1rem;
+  margin-right: 2rem;
   align-self: center;
-  margin-left:1rem;;
-
+  margin-left: 1px;
 }
 
 .new-task-button {
-  display:flex;
-  justify-content: center;
+  display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  
- 
 }
 .btn {
-height:1.5rem;
-justify-content: center;
-align-items: center;
-width:5rem;
-
+  height: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
 }
 
 .btn-add {
-  background-color: green;
-  color:white;
-  
+  background-color: rgb(50, 125, 187);
+  color: white;
 }
 .btn-cancel {
   background-color: grey;
-  color:white;
+  color: white;
 }
 button {
   background-color: whitesmoke;
 }
 
-#inputField{
-  display:none;
+#inputField {
+  display: none;
 }
 
-option{
+option {
   list-style-type: none;
   display: flex;
   justify-content: center;
@@ -122,13 +109,69 @@ option{
 }
 
 .styled-select select {
-  -moz-appearance:none; /* Firefox */
-  -webkit-appearance:none; /* Safari and Chrome */
-  appearance:none;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
 }
 
 /* option :active{
   background-color: blue;
 } */
 
+#addBtn {
+  background-color: rgb(50, 125, 187);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
+.create {
+  background-color: rgb(50, 125, 187);
+  border: none;
+  color: white;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.cancel {
+  background-color: rgb(212, 97, 97);
+  border: none;
+  color: white;
+  padding: 7px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.laneInput {
+  padding-top: 10 px;
+}
+
+input[type="text"],
+select {
+  padding: 5px 20px;
+  border: 1px solid #ccc;
+}
+
+#selectId {
+  position: relative;
+  border: none;
+  width: 1px;
+  color: #000000;
+  height: 12px;
+  background-color: #b9bfd7;
+}

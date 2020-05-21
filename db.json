@@ -18,54 +18,44 @@
   },
   "tasks": [
     {
-      "title": "okkk ",
-      "status": "pow",
-      "id": 46
+      "title": "Basic Programming",
+      "status": "Todo",
+      "id": 5
     },
     {
-      "title": "ggfgfg",
-      "status": "Archive",
-      "id": 54
+      "title": "Github Installation",
+      "status": "Done",
+      "id": 6
     },
     {
-      "title": "kkljklsd",
-      "status": "todo",
-      "id": 59
+      "title": "Dockerhub Installation",
+      "status": "Done",
+      "id": 7
     },
     {
-      "title": "dockerhub account creations",
-      "status": "progress",
-      "id": 61
+      "title": "PC setup",
+      "status": "Progress",
+      "id": 8
     },
     {
-      "title": "Marionette Documentation",
-      "status": "done",
-      "id": 63
+      "title": "Javascript Refresher",
+      "status": "Todo",
+      "id": 11
     },
     {
-      "title": "hello world program completed",
-      "status": "ongoing",
-      "id": 65
+      "title": "heroku",
+      "status": "Todo",
+      "id": 12
     },
     {
-      "title": "lunch",
-      "status": "Accounts",
-      "id": 68
+      "title": "Graphic Design",
+      "status": "Progress",
+      "id": 13
     },
     {
-      "title": "hello",
-      "status": "ongoing",
-      "id": 69
-    },
-    {
-      "title": "CSS editing and testing",
-      "status": "progress",
-      "id": 70
-    },
-    {
-      "title": "gfgfgfgf",
-      "status": "pow",
-      "id": 71
+      "title": "Oracle VMware setup",
+      "status": "Done",
+      "id": 14
     }
   ]
 }

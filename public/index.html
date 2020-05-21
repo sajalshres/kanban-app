@@ -8,20 +8,18 @@
 <link rel="stylesheet" href="./css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<body>
-  <!-- <div id="newLane"><div>
-    <br>
-    <br> -->
+<body style="background-color: rgb(220, 221, 255); font-family: Helvetica">
+  <h1 style="color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif;"><strong>Kanban App</strong></h1>
   <div id="contain"></div>
   <script id="todoTemplate" type="text/html">
-      <p><%= title%></p>
+      <p style="font-family: 'Times New Roman', Times, serif;"><%= title%></p>
   </script>
   <script id="inputTemplate" type="text/html">
     <label class="header">
      <h4> <%= status%> </h4>
-      <!-- <% if (status== "todo") { %> -->
+      <% if (status== "Todo") { %>
       <i id = "newTodo" class="fa fa-plus" ></i>
-      <!-- <% } %> -->
+      <% } %>
     </label>
     <div id ="inputField"> 
       <input type="text" id="newTask" name="fname">
@@ -43,7 +41,7 @@
     <br>
  </script>
   <script id="inputLaneTemplate" type="text/html">
-  <input class="laneInput" id="laneName">
+  <input type = "text" class="laneInput" id="laneName">
   <button class="create" id="createBtn">Create</button><button class="cancel" id="cancelBtn">Cancel</button>
   <br>
   <br>
