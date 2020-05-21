@@ -3,7 +3,7 @@ var Model = require('./models/model');
 var Collection = require('./collections/collection')
 var _ = require('underscore')
 var $ = require('jquery')
-var tempArray =[];
+var tempArray =['todo', 'progress', 'done'];
 var inputActive = false;
 
 

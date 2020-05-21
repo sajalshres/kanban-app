@@ -18,54 +18,9 @@
   },
   "tasks": [
     {
-      "title": "Backbone Documentation",
-      "status": "Archive",
-      "id": 26
-    },
-    {
-      "title": "CSS editing and testing",
-      "status": "Accounts",
-      "id": 30
-    },
-    {
-      "title": "Marionette Documentationk ghgjhgjhgjhgjhgjhghbdhgdhfgsdfghsg",
-      "status": "done",
-      "id": 32
-    },
-    {
-      "title": "hello world program completed",
-      "status": "pow",
-      "id": 45
-    },
-    {
       "title": "okkk ",
       "status": "pow",
       "id": 46
-    },
-    {
-      "title": "hghgjghjdhfkjdhgjkdfhgkjfhdgkjdhgkjdhfgkjdfhgkjhfkjg",
-      "status": "pow",
-      "id": 48
-    },
-    {
-      "title": "hello",
-      "status": "pow",
-      "id": 49
-    },
-    {
-      "title": "hghghgd",
-      "status": "pow",
-      "id": 50
-    },
-    {
-      "title": "gfgfgfgf",
-      "status": "done",
-      "id": 51
-    },
-    {
-      "title": "kkljklsd",
-      "status": "Archive",
-      "id": 53
     },
     {
       "title": "ggfgfg",
@@ -73,24 +28,44 @@
       "id": 54
     },
     {
-      "title": "fgfg",
-      "status": "Archive",
-      "id": 55
-    },
-    {
-      "title": "sdf",
-      "status": "done",
-      "id": 56
+      "title": "kkljklsd",
+      "status": "todo",
+      "id": 59
     },
     {
       "title": "dockerhub account creations",
-      "status": "done",
-      "id": 57
+      "status": "progress",
+      "id": 61
     },
     {
-      "title": "dgyrthgnbkhsdkdfkjhdjkhdkjfhskjdhjkshjh",
+      "title": "Marionette Documentation",
       "status": "done",
-      "id": 58
+      "id": 63
+    },
+    {
+      "title": "hello world program completed",
+      "status": "ongoing",
+      "id": 65
+    },
+    {
+      "title": "lunch",
+      "status": "Accounts",
+      "id": 68
+    },
+    {
+      "title": "hello",
+      "status": "ongoing",
+      "id": 69
+    },
+    {
+      "title": "CSS editing and testing",
+      "status": "progress",
+      "id": 70
+    },
+    {
+      "title": "gfgfgfgf",
+      "status": "pow",
+      "id": 71
     }
   ]
 }
