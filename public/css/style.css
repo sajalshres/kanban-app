@@ -38,14 +38,23 @@
 }
 
 .each-task {
-  height:3rem;
   padding:4px;
   background-color:white;
   border:1px solid #bfe6ff;
   border-radius: 5px;
   margin:2px;
   justify-content: center;
+  flex-direction: column;
+  align-items:center;
+  overflow: hidden;
 }
+
+#selectId{
+  position: relative;
+  border:none;
+  width:16px;
+  }
+  
 
 .custom-menu{
   z-index:100;
@@ -112,12 +121,14 @@ option{
   cursor: pointer;
 }
 
+.styled-select select {
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+
 /* option :active{
   background-color: blue;
 } */
 
-#selectId{
-  border:none;
-  margin-top: 2px;
-}
 

@@ -18,11 +18,6 @@
   },
   "tasks": [
     {
-      "title": "dockerhub account creations",
-      "status": "progress",
-      "id": 6
-    },
-    {
       "title": "Backbone Documentation",
       "status": "Archive",
       "id": 26
@@ -33,7 +28,7 @@
       "id": 30
     },
     {
-      "title": "Marionette Documentationk ghgjhgjhgjhgjhgjhgh",
+      "title": "Marionette Documentationk ghgjhgjhgjhgjhgjhghbdhgdhfgsdfghsg",
       "status": "done",
       "id": 32
     },
@@ -48,12 +43,7 @@
       "id": 46
     },
     {
-      "title": "dgyrthg",
-      "status": "Archive",
-      "id": 47
-    },
-    {
-      "title": "hghgjghj",
+      "title": "hghgjghjdhfkjdhgjkdfhgkjfhdgkjdhgkjdhfgkjdfhgkjhfkjg",
       "status": "pow",
       "id": 48
     },
@@ -73,11 +63,6 @@
       "id": 51
     },
     {
-      "title": "sdf",
-      "status": "todo",
-      "id": 52
-    },
-    {
       "title": "kkljklsd",
       "status": "Archive",
       "id": 53
@@ -91,6 +76,21 @@
       "title": "fgfg",
       "status": "Archive",
       "id": 55
+    },
+    {
+      "title": "sdf",
+      "status": "done",
+      "id": 56
+    },
+    {
+      "title": "dockerhub account creations",
+      "status": "done",
+      "id": 57
+    },
+    {
+      "title": "dgyrthgnbkhsdkdfkjhdjkhdkjfhskjdhjkshjh",
+      "status": "done",
+      "id": 58
     }
   ]
 }
