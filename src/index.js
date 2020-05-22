@@ -7,8 +7,6 @@ var tempArray =['Todo', 'Progress', 'Done'];
 var inputActive = false;
 var mySource = "";
 
-
-
 var lanesView = Backbone.View.extend({
     events: {
         "click .addLaneInputEnable": "onAddLane",
@@ -37,13 +35,11 @@ var lanesView = Backbone.View.extend({
     syncer: function () {
         document.getElementById("createBtn").disabled = false;
         this.myPublic = document.getElementById("laneName").value
-        console.log(this.myPublic);
         if (this.myPublic === "" || (_.contains(tempArray, this.myPublic))) {
             document.getElementById("createBtn").disabled = true;
         }
     },
     onAddLane: function () {
-        console.log("clicked");
         var template = _.template($("#inputLaneTemplate").html());
         var html = template();
         this.$el.html(html);
@@ -51,7 +47,6 @@ var lanesView = Backbone.View.extend({
     },
     initialize: function () {
         this.myPublic = ""
-        console.log("lane view created")
     },
     render: function () {
         var template = _.template($("#addLaneTemplate").html());
@@ -61,7 +56,6 @@ var lanesView = Backbone.View.extend({
 })
 var TodosView = Backbone.View.extend({
     events: {
-        // 'change input#newTask': 'loadTask',
         "click #add":"newTodo",
         "click #newTodo": "toggleInputField",
         "click #cancelTodo":"cancelTodo",
@@ -70,48 +64,20 @@ var TodosView = Backbone.View.extend({
         "dragstart .each-task": "dragstart",
         "dragover": "dragover"
     },
-    // loadTask: function (event) {
-    //     var val = $(event.currentTarget).val();
-    //     var newModel = new Model.Task();
-    //     var self = this;
-    //     newModel.set("title", val);
-    //     newModel.set("status", self.myPublic);
-    //     newModel.save(null, {
-    //         success: function () {
-    //             console.log("model saved")
-    //             tasks.fetch();
-    //         },
-    //         error: function () {
-    //             console.log("model saving failed")
-    //         }
-    //     })
-    // },
     dragover:function(event){
         event.preventDefault()
-        // console.log(event.target)
     },
     dragstart:function(event){
-        console.log(event.target);
-        // this.mySource = event.target.id;
     },
-
     draggable:function(event){
-        console.log("hudai cha")
         mySource = event.target.id;
-        
     },
     dropper:function(event){
-        // event.preventDefault()
-        console.log(event.target.id);
         this.myTarget = event.target.id;
-        console.log(this.myTarget);
-        console.log(this.mySource)
         var self = this;
         this.model.each((target)=>{
-            console.log(target.get("title"))
             if(target.get("title") === mySource){
                 if(_.contains(tempArray, self.myTarget)){
-                    console.log("chalyo")
                     tasks.remove(target);
                     target.set("status", self.myTarget);
                     target.save(null, {
@@ -119,15 +85,12 @@ var TodosView = Backbone.View.extend({
                             tasks.fetch();
                         },
                         error:()=>{
-
                         }
                     })
                 }
             }
         })
-
     },
-
     newTodo: function (event) {
         var val = $("#newTask").val();
         if(val.length <2  ){
@@ -140,11 +103,9 @@ var TodosView = Backbone.View.extend({
         newModel.set("status", self.myPublic);
         newModel.save(null, {
             success: function () {
-                console.log("model saved")
                 tasks.fetch();
             },
             error: function () {
-                console.log("model saving failed")
             }
         })
         this.toggleInputField();
@@ -170,7 +131,6 @@ var TodosView = Backbone.View.extend({
     initialize: function (option) {
         this.mySource = "";
         this.myTarget = "";
-        console.log("ya samma chalyo")
         this.myPublic = option.option;
         this.model.on("remove", this.render, this);
         this.model.on("add", this.render, this);
@@ -200,34 +160,27 @@ var TodoView = Backbone.View.extend({
         "click .editText": "editTask",       
     },
     insert: function () {
-        console.log('submit done');
     },
     syncer: function () {
         this.myPublic = document.getElementById("editor").value
         document.getElementById("edit").style.visibility = "visible";
-        console.log(this.myPublic);
     },
     onClick: function (e) {
         e.stopPropagation();
-        console.log("item clicked")
     },
     editTask: function (event) {
         event.stopPropagation();
-        console.log("editTask clicked")
         this.model.set("title", this.myPublic);
         this.model.save(null, {
             success: function () {
-                console.log("edit success");
                 tasks.fetch();
             },
             error: function () {
-                console.log("server down")
             }
         })
     },
     onClickCancel: function (event) {
         event.stopPropagation();
-        console.log("cancel clicked")
         this.render();
     },
     tagName: "div",
@@ -242,7 +195,6 @@ var TodoView = Backbone.View.extend({
         this.model.on("change", this.render, this);
         var self = this;
         this.$el.on('input', '#selectId', function () {
-            console.log("triggered")
             if (this.value == "remove") {
                 tasks.remove(self.model);
                 self.model.destroy();
@@ -259,19 +211,14 @@ var TodoView = Backbone.View.extend({
                 self.model.destroy();
                 clone.save(null, {
                     success:function(){
-                        console.log("moving success");
                         tasks.fetch()
                         self.render();
                     }
                 })
             }
         })
-        console.log(this)
-
         this.id = this.model.toJSON().title;
     },
-    
-
     render: function () {
         var pointer = this;
         var template = _.template($("#todoTemplate").html());
@@ -299,7 +246,6 @@ function checker() {
                     tempArray.push(tasks.at(i).get("status"))
                 }
             }
-            console.log(tempArray)
             for (i of tempArray) {
                 var selector = "#" + i;
                 var div = document.createElement("div");
@@ -310,7 +256,7 @@ function checker() {
             }
         },
         error: function () {
-            console.log("server down")
+            alert("server down")
         }
     })
 }

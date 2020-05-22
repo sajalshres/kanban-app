@@ -19,33 +19,38 @@
   "tasks": [
     {
       "title": "Basic Programming",
-      "status": "Todo",
+      "status": "Progress",
       "id": 5
     },
     {
       "title": "Github Installation",
-      "status": "Done",
+      "status": "Todo",
       "id": 6
     },
     {
       "title": "PC setup",
-      "status": "Progress",
+      "status": "Done",
       "id": 8
     },
     {
-      "title": "Oracle VMware setup",
-      "status": "Archive",
-      "id": 14
+      "title": "Javascript Refresher",
+      "status": "Todo",
+      "id": 16
     },
     {
       "title": "Dockerhub Installation",
-      "status": "Archive",
-      "id": 15
+      "status": "Todo",
+      "id": 17
     },
     {
-      "title": "Javascript Refresher",
+      "title": "SSH setup",
+      "status": "Archive",
+      "id": 18
+    },
+    {
+      "title": "Oracle VMware setup",
       "status": "Progress",
-      "id": 16
+      "id": 19
     }
   ]
 }

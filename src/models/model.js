@@ -10,7 +10,6 @@ var models = {
             }
         },
         initialize: function(){
-            console.log("Task created");
         }
     })
 }
