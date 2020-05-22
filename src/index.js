@@ -5,6 +5,7 @@ var _ = require('underscore')
 var $ = require('jquery')
 var tempArray =['Todo', 'Progress', 'Done'];
 var inputActive = false;
+var mySource = "";
 
 
 
@@ -64,6 +65,10 @@ var TodosView = Backbone.View.extend({
         "click #add":"newTodo",
         "click #newTodo": "toggleInputField",
         "click #cancelTodo":"cancelTodo",
+        "drag .each-task":"draggable",
+        "drop":"dropper",
+        "dragstart .each-task": "dragstart",
+        "dragover": "dragover"
     },
     // loadTask: function (event) {
     //     var val = $(event.currentTarget).val();
@@ -81,8 +86,47 @@ var TodosView = Backbone.View.extend({
     //         }
     //     })
     // },
+    dragover:function(event){
+        event.preventDefault()
+        // console.log(event.target)
+    },
+    dragstart:function(event){
+        console.log(event.target);
+        // this.mySource = event.target.id;
+    },
 
-   
+    draggable:function(event){
+        console.log("hudai cha")
+        mySource = event.target.id;
+        
+    },
+    dropper:function(event){
+        // event.preventDefault()
+        console.log(event.target.id);
+        this.myTarget = event.target.id;
+        console.log(this.myTarget);
+        console.log(this.mySource)
+        var self = this;
+        this.model.each((target)=>{
+            console.log(target.get("title"))
+            if(target.get("title") === mySource){
+                if(_.contains(tempArray, self.myTarget)){
+                    console.log("chalyo")
+                    tasks.remove(target);
+                    target.set("status", self.myTarget);
+                    target.save(null, {
+                        success:()=>{
+                            tasks.fetch();
+                        },
+                        error:()=>{
+
+                        }
+                    })
+                }
+            }
+        })
+
+    },
 
     newTodo: function (event) {
         var val = $("#newTask").val();
@@ -118,13 +162,14 @@ var TodosView = Backbone.View.extend({
         else{
             $("newTodo").show();
             $("#inputField").hide();
-           
             inputActive=false;
         }
 
        
     },
     initialize: function (option) {
+        this.mySource = "";
+        this.myTarget = "";
         console.log("ya samma chalyo")
         this.myPublic = option.option;
         this.model.on("remove", this.render, this);
@@ -152,9 +197,7 @@ var TodoView = Backbone.View.extend({
         "click .remove": "onClickRemove",
         "input .editTask": "syncer",
         "click .cancel": "onClickCancel",
-        "click .editText": "editTask",
-        
-       
+        "click .editText": "editTask",       
     },
     insert: function () {
         console.log('submit done');

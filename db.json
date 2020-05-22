@@ -28,34 +28,24 @@
       "id": 6
     },
     {
-      "title": "Dockerhub Installation",
-      "status": "Done",
-      "id": 7
-    },
-    {
       "title": "PC setup",
       "status": "Progress",
       "id": 8
     },
     {
-      "title": "Javascript Refresher",
-      "status": "Todo",
-      "id": 11
-    },
-    {
-      "title": "heroku",
-      "status": "Todo",
-      "id": 12
-    },
-    {
-      "title": "Graphic Design",
-      "status": "Progress",
-      "id": 13
-    },
-    {
       "title": "Oracle VMware setup",
-      "status": "Done",
+      "status": "Archive",
       "id": 14
+    },
+    {
+      "title": "Dockerhub Installation",
+      "status": "Archive",
+      "id": 15
+    },
+    {
+      "title": "Javascript Refresher",
+      "status": "Progress",
+      "id": 16
     }
   ]
 }

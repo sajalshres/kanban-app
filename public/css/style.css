@@ -2,6 +2,7 @@
 #contain {
   display: flex;
   flex-direction: row;
+  float: left;
 }
 .card {
   display: flex;
