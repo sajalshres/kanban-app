@@ -1,21 +1,31 @@
-var Marionette = require('backbone.marionette');  // 1
-var Backbone = require('backbone')
 
-var HelloWorld = Marionette.LayoutView.extend({  // 2
-    el: '#app-hook',  // 
-    attributes: {
-        id: "card",
-
-    },
+var TaskCollection = require('./collections/tasks');
+var TaskModel = require('./models/task');
+var Marionette = require('backbone.marionette');
+var TasksView = require('./views/tasks');
+var tasks = new TaskCollection();
 
 
-    template: require('./templates/layout.html'),  // 4
+tasks.fetch({
+  success: function(data,response)  {
+  App.start({initialData: response});
+ },
 
+})
+
+ 
+var App = new Marionette.Application({
+  onStart: function(options) {
+    var tasksView = new TasksView({
+      collection: new Backbone.Collection(options.initialData),
+      model: new TaskModel(),
+      
+    });
+    tasksView.render();
+    
+  }
 });
 
 
-var hello = new HelloWorld({
 
-});
-hello.render();
 

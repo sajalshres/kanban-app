@@ -1,0 +1,14 @@
+$primary-color: #333;
+$font-stack:    Helvetica, sans-serif;
+
+body {
+    font: 100% $font-stack;
+    color: $primary-color;
+  }
+
+#all-items {
+  display:flex;
+  justify-content: space-evenly;
+  align-items:center;
+  flex-direction:row;
+}
