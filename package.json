@@ -23,6 +23,7 @@
     "backbone.marionette": "^2.4.7",
     "backbone.wreqr": "^1.4.0",
     "jquery": "^3.5.1",
+    "json-server": "^0.16.1",
     "node-sass": "^4.14.1",
     "underscore": "^1.8.3",
     "underscore-template-loader": "^1.1.0",

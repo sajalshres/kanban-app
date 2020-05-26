@@ -2,54 +2,70 @@
 
     "tasks": [
       {
-        "title": "github account creation",
-        "status": "todo",
-        "id": 2
+        "id": 1,
+        "name":"github",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "database configuration",
-        "status": "todo",
-        "id": 5
+        "id": 2,
+        "name":"docker",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "dockerhub account creation",
-        "status": "todo",
-        "id": 6
+        "id": 3,
+        "name":"virtual box",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "Commit last change",
-        "status": "progress",
-        "id": 8
+        "id": 4,
+        "name":"testing",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "virtual linux setup",
-        "status": "todo",
-        "id": 9
+        "id": 5,
+        "name":"marionette",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "CSS editing",
-        "status": "progress",
-        "id": 10
+        "id": 6,
+        "name":"backbone",
+        "visible": true,
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
+      }
+    ],
+
+    "columns": [
+      {
+        "id": 1,
+        "name": "Todo",
+        "items": [1,2],
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "Ticket assign",
-        "status": "done",
-        "id": 11
+        "id": 2,
+        "name": "Progress",
+        "items": [3,4,6],
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       },
       {
-        "title": "CRUD operation",
-        "status": "done",
-        "id": 13
-      },
-      {
-        "title": "Data Structuring",
-        "status": "progress",
-        "id": 14
-      },
-      {
-        "title": "Postman Installation",
-        "status": "done",
-        "id": 15
+        "id": 3,
+        "name": "Done",
+        "items": [5],
+        "created_at": "2020/11/25-11:31",
+        "modified_at": ""
       }
     ]
   }
