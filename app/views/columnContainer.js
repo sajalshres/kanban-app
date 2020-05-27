@@ -40,7 +40,7 @@ var column_container = Marionette.CompositeView.extend({
         var id = e.target.id;
         console.log(id);
         var sel="#"+id;
-       $("#tree").append(`<div class="menu">
+       $("#header").append(`<div class="menu">
        <ul class="menu-options">
          <li id="remove" class="menu-option">remove</li>
          <li id ="edit" class="menu-option">edit</li>
@@ -58,11 +58,14 @@ var column_container = Marionette.CompositeView.extend({
 
     setPosition: function ({ top, left })  {
         $('.menu').css({'left':`${left}px`,
-       'top': `${top-340}px`});
+       'top': `${top+10}px`});
        console.log(top,left);
         this.toggleMenu('show');
       },
-
+    
+    remove:function (){
+        alert('remove function called');
+    },
    
 
     childView: taskContainer,

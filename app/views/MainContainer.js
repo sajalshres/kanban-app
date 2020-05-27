@@ -16,7 +16,7 @@ events: {
   },
 
   removeColumn: function(event) {
-    
+    new column_container().remove;
 },
 
 });
