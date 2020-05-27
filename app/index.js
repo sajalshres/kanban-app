@@ -86,6 +86,7 @@ var column_container = Marionette.CompositeView.extend({
       },
       error: () => {},
     });
+    self.$("#newTask").val('');
   },
 
   syncer: function (event) {
