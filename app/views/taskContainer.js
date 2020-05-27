@@ -8,6 +8,7 @@ var taskContainer = Marionette.LayoutView.extend({
         class:"each-task",
       };
     },
+    
     template: require("../templates/element.html"),
   });
   

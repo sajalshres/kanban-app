@@ -7,6 +7,18 @@ var Main_container = Marionette.CompositeView.extend({
     childView: column_container,
     childViewContainer: "div#columns",
    
-  });
+  ui: {
+    remove: '#remove'
+
+},
+events: {
+    'click @ui.remove': 'removeColumn'
+  },
+
+  removeColumn: function(event) {
+    
+},
+
+});
 
   module.exports = Main_container;
