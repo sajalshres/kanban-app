@@ -3,7 +3,7 @@ var Marionette = require("backbone.marionette");
 var TimeStamp = require("./services/timeNow");
 var TaskCollection = require("./collections/tasks");
 var ColumnCollection = require("./collections/columns");
-var $ = require('jquery')
+var $ = require("jquery");
 
 console.log(TimeStamp());
 
@@ -13,7 +13,8 @@ columnCollection.fetch({
   success: () => {
     taskCollection.fetch({
       success: () => {
-        // console.log(taskCollection);
+        console.log(taskCollection);
+        console.log(columnCollection);
         new Main_container({ collection: columnCollection }).render();
       },
       error: () => {
@@ -26,44 +27,40 @@ columnCollection.fetch({
   },
 });
 
-var columnview = Marionette.LayoutView.extend({
+var element_container = Marionette.LayoutView.extend({
   tagName: "div",
-
   attributes: function () {
     return {
-      id: "element",
+      id: "#" + this.model.get("name"),
     };
   },
-  template: require("./templates/todotitle.html"),
-  initialize: function () {
-    new Column_Container({
-      collection: taskCollection,
-    }).render();
-  },
+  template: require("./templates/element.html"),
 });
 
-var elementView = Marionette.LayoutView.extend({
+var column_container = Marionette.CompositeView.extend({
   tagName: "div",
-  template: require("./templates/todotitle.html"),
-  initialize: function () {},
-});
+  attributes: function () {
+    return {
+      id: this.model.get("name"),
+    };
+  },
 
-var Column_Container = Marionette.CompositeView.extend({
-  el: "#element",
-  template: require("./templates/layout.html"),
-  childView: elementView,
-  // childViewContainer: "div",
+  template: require("./templates/column.html"),
+  childView: element_container,
+  childViewContainer: "div#element",
   initialize: function () {
-    // console.log(this)
+    var items = this.model.get("items");
+    var item_object = new Array();
+    for (id of items) {
+      item_object.push(taskCollection.get(id));
+    }
+    this.collection = new Backbone.Collection(item_object);
   },
 });
 
 var Main_container = Marionette.CompositeView.extend({
-  el: "#app-hook",
-  template: require("./templates/todolist.html"),
-  childView: columnview,
-  childViewContainer: "div",
-  initialize: function () {
-    console.log(this);
-  },
+  el: "#tree",
+  template: require("./templates/container.html"),
+  childView: column_container,
+  childViewContainer: "div#columns",
 });
