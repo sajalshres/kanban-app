@@ -36,7 +36,7 @@ var taskContainer = Marionette.LayoutView.extend({
     this.myBuffer = options;
     console.log(options.parent.get("name"));
     this.$el.on('input', '#opt', function (){
-      console.log(this.value);
+        //  if(this.val === "")
     })
   },
 
