@@ -1,15 +1,34 @@
 var Marionette = require("backbone.marionette");
 var taskContainer = require("./taskContainer");
 var TaskCollection = require("../collections/tasks");
+var ColumnCollection = require("../collections/columns");
 var Task = require("../models/task");
 var TimeStamp = require("../services/timeNow");
 var variables = require("../services/variables");
 var $ = require("jquery");
+var menuOpen = false;
+var tempArray = [];
+var mySource;
+var sourceId;
+var draggedItemId;
+var draggedItem;
 
 variables.taskCollection = new TaskCollection();
 variables.bufferTaskCollection = new TaskCollection();
+variables.columnCollection = new ColumnCollection();
 
 variables.taskCollection.fetch({});
+
+variables.taskCollection.fetch({
+  success: function () {
+    for (var i = 0; i < variables.taskCollection.length; i++) {
+      tempArray.push(variables.taskCollection.at(i).get("name"))
+
+    }
+  }
+});
+
+console.log(tempArray);
 
 var column_container = Marionette.CompositeView.extend({
   tagName: "div",
@@ -43,22 +62,95 @@ var column_container = Marionette.CompositeView.extend({
     "input @ui.editVal": "editSyncer",
     "click @ui.conform": "conformEdit",
     "click #cancelLoad": "cancelLoad",
+    "drag .each-task": "draggable",
+    "drop": "dropper",
+    "dragstart .each-task": "dragstart",
+    "dragover": "dragover",
+    "click #new-column": "addColumn",
   },
 
+  dragover: function (event) {
+    event.preventDefault();
+    var id = event.target.id;
+
+  },
+  dragstart: function (event) {
+    var id = event.target.id;
+    sel = "#" + id;
+    $(sel).css({
+      "border": "2px solid black",
+
+    })
+    mySource = event.target.id;
+    sourceId = this.model.get("items");
+    draggedItem = this.model;
+    variables.taskCollection.each((target) => {
+      if (target.get("name") === mySource) {
+        draggedItemId = target.get("id");
+      }
+    })
+  },
+  draggable: function (event) {
+
+  },
+  dropper: function (event) {
+    var self = this;
+    this.myTarget = event.target.id;
+    console.log(mySource);
+    variables.taskCollection.each((target) => {
+      if (target.get("name") === mySource) {
+        console.log(target);
+        obj = target;
+        let buff_array = self.model.get("items");
+        buff_array.unshift(obj.id);
+        self.model.set("items", buff_array);
+        self.model.set("modified_at", TimeStamp());
+        const index = sourceId.indexOf(draggedItemId);
+        sourceId.splice(index, 1);
+        variables.taskCollection.add(draggedItem);
+        draggedItem.save();
+        self.model.save(null, {
+          success: () => {
+            variables.columnCollection.fetch({
+              success: function () {
+                variables.taskCollection.fetch({
+                  success: function () {
+                    this.reder();
+
+                  }
+                });
+              }
+            });
+          },
+          error: () => {
+          }
+        })
+      }
+    })
+  },
+  addColumn: function () {
+    alert("new column added");
+
+  },
   removeColumn() {
+    this.toggleMenu();
     this.model.destroy({
       success: function () {
         console.log("remove succesful");
       },
-      error: function () {},
+      error: function () { },
     });
   },
 
   editor: function () {
-    console.log("edit clicked");
-    this.$("#header").html(`<input type="text" id="editTask" value="">
-    <button id="editTaskConform">edit</button>
-    <button id="cancelAdd">Cancel</button>`);
+    this.toggleMenu();
+    this.$("#header").html(`<div id="edit-button">
+    <input id="editTask" value="${this.model.get("name")}">
+    <div id = "button-container"> 
+        <button class="btn btn-confirm" id="editTaskConform">Confirm</button>
+        <button class="btn btn-cancel" id="CancelAdd">Cancel</button>
+    </div>
+           </div>`);
     this.$("#editTask").val(this.model.get("name"));
     this.$("#editTaskConform").prop("disabled", true);
   },
@@ -86,7 +178,7 @@ var column_container = Marionette.CompositeView.extend({
       success: () => {
         self.render();
       },
-      error: () => {},
+      error: () => { },
     });
   },
 
@@ -105,6 +197,7 @@ var column_container = Marionette.CompositeView.extend({
       modified_at: "",
     }).save(null, {
       success: () => {
+        console.log(variables.bufferTaskCollection);
         variables.bufferTaskCollection.fetch({
           success: () => {
             let obj = variables.bufferTaskCollection.pop();
@@ -114,14 +207,14 @@ var column_container = Marionette.CompositeView.extend({
             self.model.set("items", buff_array);
             self.model.set("modified_at", TimeStamp());
             self.model.save(null, {
-              success: () => {},
-              error: () => {},
+              success: () => { },
+              error: () => { },
             });
           },
-          error: () => {},
+          error: () => { },
         });
       },
-      error: () => {},
+      error: () => { },
     });
     self.$("#newTask").val("");
     self.render();
@@ -130,50 +223,62 @@ var column_container = Marionette.CompositeView.extend({
   addTask: function (e) {
     e.stopPropagation();
     console.log("wow");
-    this.$("#header").html(`<input type="text" id="newTask" value="">
+    this.$("#header").html(`<div id ="edit-button"> <input type="text" id="newTask" value="">
+    <div id="button-container">
     <button id="addTask">Add</button>
-    <button id="cancelAdd">Cancel</button>`);
+    <button id="cancelAdd">Cancel</button>
+    </div>
+    </div>`);
   },
 
+  toggleMenu: function (id) {
+    $('.menu').css({
+      "display": "none"
+    })
+    menuOpen = !menuOpen;
+
+    this.$('.menu').css({
+      display: function () {
+        if (menuOpen) {
+          return 'block';
+        }
+        else {
+          return 'none';
+        }
+      }
+    });
+
+  },
   displayMenu: function (e) {
     e.preventDefault();
-    e.stopPropagation();
     const origin = {
       left: e.clientX,
-      top: e.clientY,
+      top: e.clientY
     };
-    var id = e.target.id;
+    var id = this.model.get("name");
     console.log(id);
-    var sel = "#" + id;
-    this.$("#header").append(`<div class="menu">
-       <ul class="menu-options">
-         <li id ="add" class="menu-option">add</li>
-         <li id="remove" class="menu-option">remove</li>
-         <li id ="edit" class="menu-option">edit</li>
-         <li id = "cancelLoad" class="menu-option">Cancel</li>
-       </ul>
-        </div>`);
-    this.setPosition(origin);
+    this.setPosition(origin, id);
     return false;
+
+
   },
 
-  toggleMenu: function (command) {
-    this.$(".menu").css({ display: "block" });
-  },
-
-  setPosition: function ({ top, left }) {
-    this.$(".menu").css({ left: `${left}px`, top: `${top + 10}px` });
+  setPosition: function ({ top, left }, id) {
+    this.$('.menu').css({
+      'left': `${left}px`,
+      'top': `${top + 10}px`
+    });
     console.log(top, left);
-    this.toggleMenu("show");
+    this.toggleMenu(id);
   },
 
-  // removeColumn: function () {
-  //   alert("remove function called");
-  // },
+
 
   childView: taskContainer,
 
   childViewContainer: "div#element",
+
+
 
   initialize: function () {
     this.inputValue = "";
@@ -188,11 +293,12 @@ var column_container = Marionette.CompositeView.extend({
     this.collection = new Backbone.Collection(item_object);
   },
 
-  childViewOptions: function(model, index) {
+  childViewOptions: function (model, index) {
     return {
       parent: this.model
     }
-}}
+  }
+}
 );
 
 module.exports = column_container;

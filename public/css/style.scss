@@ -11,6 +11,13 @@ body {
 .title{
   text-align: center;
 }
+
+#tree{
+  display:flex;
+  justify-content:flex-start;
+  flex-direction:row;
+
+}
 #columns {
   display:flex;
   justify-content:flex-start;
@@ -51,7 +58,7 @@ body {
   border:1px solid #ffffff;
   border-radius:5px;
   :hover {
-    background-color:$primary-color;
+    // background-color:$primary-color;
     font-size: 1.1rem;
     color:$secondary-color;
   }
@@ -108,4 +115,90 @@ body {
       }
     }
   }
+}
+#menu-element{
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color:white;
+
+  .menu-options {
+    list-style: none;
+    padding: 10px 0;
+
+    .menu-option {
+      font-weight: 500;
+      font-size: 14px;
+      padding: 10px 40px 10px 20px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+input{
+  height:60px;
+  width:150px;
+  border:1px solid #b0e0e6;
+  margin:15px;
+}
+
+#button-container{
+  display: flex;
+  align-items:center ;
+  justify-content: center !important;
+
+}
+
+#edit-button{
+  display:flex;
+  justify-content: center !important;
+  align-items:center;
+  flex-direction: column;
+}
+
+.btn{
+  background-color:#20b2aa;
+  border: none;
+  color: white;
+  width:70px;
+  padding:5px 7px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin-left:5px;
+  
+}
+
+#newColumn{
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 5px;
+  width:10rem;
+  .fa{
+    font-size: 3em !important; /*size whatever you like*/
+}
+}
+
+#newColumnText{
+  display:flex;
+  justify-content: center ;
+  align-items:center;
+  flex-direction: column;
+  display:none;
+}
+.addButton{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  flex-direction: column;
+
 }

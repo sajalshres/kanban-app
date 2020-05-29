@@ -3,6 +3,7 @@ var variables = require("../services/variables");
 var $ = require("jquery");
 var _ = require("underscore");
 var TimeStamp = require("../services/timeNow")
+var menuOpen =false;
 var taskContainer = Marionette.LayoutView.extend({
   tagName: "div",
   attributes: function () {
@@ -22,7 +23,11 @@ var taskContainer = Marionette.LayoutView.extend({
     "click #move": "mover",
     "input #taskChanger": "syncer",
     "click #editConform": "editSubmit",
-    "click #editCancel": "canceler"
+    "click #editCancel": "canceler",
+    "click #editTask": 'editTask',
+    "click #removeTask": 'removeTask',
+    "click #task-action": "displayMenu",
+
   },
 
   canceler:function(){
@@ -58,40 +63,94 @@ var taskContainer = Marionette.LayoutView.extend({
     e.stopPropagation();
     console.log(this.$("#move").val());
   },
+  editTask: function() {
+    this.toggleMenu();
+    this.$("#task").html(`
+    <div id="edit-button">
+    <input id="taskChanger" value="${this.model.get("name")}">
+    <div id = "button-container"> 
+        <button class="btn btn-confirm" id="editConform">Confiem</button>
+        <button class="btn btn-cancel" id="editCancel">Cancel</button>
+    </div>
+           </div>`)
+           this.$('#editConform').prop("disabled", true);
+        
+
+  },
+  removeTask: function(){
+    this.toggleMenu();
+    console.log(this.model);
+    var {parent} = this.myBuffer
+    var tempArray = parent.get("items");
+           tempArray.splice(tempArray.indexOf(this.model.get("id")),1);
+              parent.set("items", tempArray);
+              parent.set("modified_at", TimeStamp());
+              parent.save(null, {
+                success:function(){
+                  this.model.destroy();
+                },
+                error:function(){
+
+                }
+              })
+   
+  },
+
+
 
   template: require("../templates/element.html"),
 
   initialize: function (options) {
     this.myBuffer = options;
     this.myEditValue = "";
-    console.log(options.parent.get("name"));
-    var self = this;
-    this.$el.on('input', '#opt', function (){
-         if(this.value === "edit"){
-           console.log(this.value)
-           self.$("#task").html(`<input id="taskChanger" value="${self.model.get("name")}">
-           <button id="editConform">edit</button>
-           <button id="editCancel">cancel</button>`)
-           self.$('#editConform').prop("disabled", true);
-         }else if(this.value === "remove"){
-          console.log(this.value)
-           var tempArray = options.parent.get("items");
-           tempArray.splice(tempArray.indexOf(self.model.get("id")),1);
-              options.parent.set("items", tempArray);
-              options.parent.set("modified_at", TimeStamp());
-              options.parent.save(null, {
-                success:function(){
-                  self.model.destroy();
-                },
-                error:function(){
-
-                }
-              })
-         }else{
-
-         }
-    })
+    
   },
+  toggleMenu :function ()   {
+
+    console.log("positionsss");
+    $('#menu-element').css({
+        "display":"none"
+    }) 
+    menuOpen =!menuOpen;
+
+    this.$('#menu-element').css({
+        display: function(){
+            if (menuOpen){
+                return 'block';
+            }
+            else {
+                return 'none';
+            }
+        }
+    });
+  
+  },
+  displayMenu: function(e) {
+    e.preventDefault();
+    const origin = {
+        left: e.clientX,
+        top: e.clientY
+      };
+    var id = this.model.get("name");
+    this.setPosition(origin,id);
+      return false;
+  
+
+},
+
+setPosition: function ({ top, left },id)  {
+    this.$('#menu-element').css({'left':`${left}px`,
+   'top': `${top+5}px`});
+   console.log("position")
+    this.toggleMenu();
+  },
+
+removeColumn:function (){
+    this.collection.remove(this.model);
+    this.model.destroy();
+    this.toggleMenu();
+   
+},
 
   onRender:function(){
     var pointer = this;
