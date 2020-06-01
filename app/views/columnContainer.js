@@ -6,6 +6,8 @@ var Task = require("../models/task");
 var TimeStamp = require("../services/timeNow");
 var variables = require("../services/variables");
 var $ = require("jquery");
+var _ = require("underscore")
+var Column = require('../models/column')
 var menuOpen = false;
 var tempArray = [];
 var mySource;
@@ -75,63 +77,65 @@ var column_container = Marionette.CompositeView.extend({
   },
   dragover: function (event) {
     event.preventDefault();
-    var id = event.target.id;
-
   },
   dragstart: function (event) {
-    var id = event.target.id;
-    sel = "#" + id;
-    $(sel).css({
-      "border": "2px solid black",
+    // var id = event.target.id;
+    // sel = "#" + id;
+    // $(sel).css({
+    //   "border": "2px solid black",
+    // })
+    // mySource = event.target.id;
+    // sourceId = this.model.get("items");
+    // draggedItem = this.model;
+    // variables.taskCollection.each((target) => {
+    //   if (target.get("name") === mySource) {
+    //     draggedItemId = target.get("id");
+    //   }
+    // })
 
-    })
-    mySource = event.target.id;
-    sourceId = this.model.get("items");
-    draggedItem = this.model;
-    variables.taskCollection.each((target) => {
-      if (target.get("name") === mySource) {
-        draggedItemId = target.get("id");
-      }
-    })
+
   },
   draggable: function (event) {
-    event.preventDefault();
-
+    variables.mySourceId = event.target.id;
+    variables.mySourceModel = this.model;
   },
   dropper: function (event) {
-    var self = this;
     this.myTarget = event.target.id;
-    console.log(mySource);
-    variables.taskCollection.each((target) => {
-      if (target.get("name") === mySource) {
-        console.log(target);
-        obj = target;
-        let buff_array = self.model.get("items");
-        buff_array.unshift(obj.id);
-        self.model.set("items", buff_array);
-        self.model.set("modified_at", TimeStamp());
-        const index = sourceId.indexOf(draggedItemId);
-        sourceId.splice(index, 1);
-        variables.taskCollection.add(draggedItem);
-        draggedItem.save();
-        self.model.save(null, {
-          success: () => {
-            variables.columnCollection.fetch({
-              success: function () {
-                variables.taskCollection.fetch({
-                  success: function () {
-                    this.reder();
+    let titleArray = new Array();
 
-                  }
-                });
-              }
-            });
-          },
-          error: () => {
-          }
-        })
-      }
+    variables.columnCollection.each((model)=>{
+      titleArray.push(model.get("name"));
     })
+    if(_.contains(titleArray, this.myTarget)){
+      var tempModel;
+      variables.taskCollection.each((model)=>{
+        if(model.get("id") == variables.mySourceId){
+          tempModel = model;
+        }
+      })
+      let tempArray = variables.mySourceModel.get("items");
+      tempArray.splice(tempArray.indexOf(tempModel.get("id")),1);
+      variables.mySourceModel.set("items", tempArray);
+      tempArray = this.model.get("items");
+      tempArray.unshift(tempModel.get("id"));
+      this.model.set("items", tempArray);
+      variables.mySourceModel.save(null, {
+        success: ()=>{
+          this.model.save(null, {
+            success: ()=>{
+              variables.columnCollection.reset(null);
+              variables.columnCollection.fetch();
+            },
+            error:()=>{
+
+            }
+          })
+        },
+        error: ()=>{
+
+        }
+      })
+    }
   },
   addColumn: function () {
     alert("new column added");
@@ -289,6 +293,7 @@ var column_container = Marionette.CompositeView.extend({
   initialize: function () {
     this.inputValue = "";
     this.editValue = "";
+    this.myTarget = "";
     var items = this.model.get("items");
     console.log(items);
     var item_object = new Array();
