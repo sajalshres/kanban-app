@@ -52,7 +52,7 @@ var column_container = Marionette.CompositeView.extend({
     conform: "#editTaskConform",
   },
   events: {
-    "contextmenu @ui.menu": "displayMenu",
+    "click @ui.menu": "displayMenu",
     "click @ui.remove": "removeColumn",
     "click @ui.add": "addTask",
     "click @ui.cancel": "cancelLoad",
@@ -67,8 +67,12 @@ var column_container = Marionette.CompositeView.extend({
     "dragstart .each-task": "dragstart",
     "dragover": "dragover",
     "click #new-column": "addColumn",
+    "click #cancel-add":"canceler",
   },
 
+  canceler:function () {
+    this.render();
+  },
   dragover: function (event) {
     event.preventDefault();
     var id = event.target.id;
@@ -91,6 +95,7 @@ var column_container = Marionette.CompositeView.extend({
     })
   },
   draggable: function (event) {
+    event.preventDefault();
 
   },
   dropper: function (event) {
@@ -148,7 +153,7 @@ var column_container = Marionette.CompositeView.extend({
     <input id="editTask" value="${this.model.get("name")}">
     <div id = "button-container"> 
         <button class="btn btn-confirm" id="editTaskConform">Confirm</button>
-        <button class="btn btn-cancel" id="CancelAdd">Cancel</button>
+        <button class="btn btn-cancel" id="cancelAdd">Cancel</button>
     </div>
            </div>`);
     this.$("#editTask").val(this.model.get("name"));
@@ -221,12 +226,13 @@ var column_container = Marionette.CompositeView.extend({
   },
 
   addTask: function (e) {
+    this.toggleMenu();
     e.stopPropagation();
     console.log("wow");
     this.$("#header").html(`<div id ="edit-button"> <input type="text" id="newTask" value="">
     <div id="button-container">
-    <button id="addTask">Add</button>
-    <button id="cancelAdd">Cancel</button>
+    <button class="btn btn-confirm" id="addTask">Add</button>
+    <button class="btn btn-cancel" id="cancelAdd">Cancel</button>
     </div>
     </div>`);
   },

@@ -69,7 +69,7 @@ var taskContainer = Marionette.LayoutView.extend({
     <div id="edit-button">
     <input id="taskChanger" value="${this.model.get("name")}">
     <div id = "button-container"> 
-        <button class="btn btn-confirm" id="editConform">Confiem</button>
+        <button class="btn btn-confirm" id="editConform">Confirm</button>
         <button class="btn btn-cancel" id="editCancel">Cancel</button>
     </div>
            </div>`)
@@ -82,17 +82,17 @@ var taskContainer = Marionette.LayoutView.extend({
     console.log(this.model);
     var {parent} = this.myBuffer
     var tempArray = parent.get("items");
-           tempArray.splice(tempArray.indexOf(this.model.get("id")),1);
-              parent.set("items", tempArray);
-              parent.set("modified_at", TimeStamp());
-              parent.save(null, {
-                success:function(){
-                  this.model.destroy();
-                },
-                error:function(){
+    tempArray.splice(tempArray.indexOf(this.model.get("id")),1);
+      parent.set("items", tempArray);
+      parent.set("modified_at", TimeStamp());
+      parent.save(null, {
+        success:function(){
+          this.model.destroy();
+        },
+        error:function(){
 
-                }
-              })
+        }
+      })
    
   },
 
@@ -107,7 +107,6 @@ var taskContainer = Marionette.LayoutView.extend({
   },
   toggleMenu :function ()   {
 
-    console.log("positionsss");
     $('#menu-element').css({
         "display":"none"
     }) 

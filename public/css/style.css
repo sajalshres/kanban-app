@@ -49,7 +49,7 @@ body {
           flex-direction: column;
   padding: 0 2px 0px 2px;
   margin-left: 5px;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   width: 250px;
 }
 
@@ -200,18 +200,18 @@ input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center !important;
-      -ms-flex-pack: center !important;
-          justify-content: center !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #edit-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center !important;
-      -ms-flex-pack: center !important;
-          justify-content: center !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -222,7 +222,6 @@ input {
 }
 
 .btn {
-  background-color: #20b2aa;
   border: none;
   color: white;
   width: 70px;
@@ -233,17 +232,25 @@ input {
   margin-left: 5px;
 }
 
+.btn-confirm {
+  background-color: #20b2aa;
+}
+
+.btn-cancel {
+  background-color: red;
+}
+
 #newColumn {
   border: 1px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;

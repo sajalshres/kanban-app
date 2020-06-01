@@ -8,8 +8,6 @@ var tempArray = [];
 
 columnCollection = new ColumnCollection();
 
-
-
 console.log(tempArray);
 var Main_container = Marionette.CompositeView.extend({
   el: "#tree",
@@ -25,6 +23,7 @@ var Main_container = Marionette.CompositeView.extend({
 
   },
   events: {
+    'click': "removeMenu",
     'click @ui.addColumn': 'addColumn',
     'click @ui.addConfirm': 'addConfirm',
     'click @ui.addCancel': 'addCancel',
@@ -41,9 +40,9 @@ var Main_container = Marionette.CompositeView.extend({
     var inputVal = $("#colum-add-text").val();
     if (inputVal === "" || (_.contains(tempArray, inputVal))) {
       alert("no input value or either the colum is already present");
-    
+
     }
-    else{
+    else {
       console.log(inputVal);
       columnModel = new ColumnModel({
         name: inputVal,
@@ -55,7 +54,7 @@ var Main_container = Marionette.CompositeView.extend({
       columnModel.save({
         success: function () {
           columnCollection.fetch({
-            sucees:function() {
+            sucees: function () {
               this.render();
             }
           });
@@ -65,8 +64,12 @@ var Main_container = Marionette.CompositeView.extend({
       $("#newColumnText").hide();
       $("#new-column").show();
     }
-  
+  },
 
+  removeMenu : function () {
+    $('.menu').css({
+      "display":"none"
+    })
 
   },
 
@@ -74,7 +77,7 @@ var Main_container = Marionette.CompositeView.extend({
     $("#newColumnText").hide();
     $("#new-column").show();
   },
-  initialize:function () {
+  initialize: function () {
     columnCollection.fetch({
       success: function () {
         for (var i = 0; i < columnCollection.length; i++) {
@@ -82,7 +85,7 @@ var Main_container = Marionette.CompositeView.extend({
         }
         console.log(tempArray);
       }
-    });    
+    });
   }
 
 });
