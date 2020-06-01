@@ -1,4 +1,4 @@
-var Marionette = require("backbone.marionette");
+import  Marionette from "backbone.marionette";
 var variables = require("../services/variables");
 var $ = require("jquery");
 var _ = require("underscore");
@@ -100,10 +100,15 @@ var taskContainer = Marionette.LayoutView.extend({
 
   template: require("../templates/element.html"),
 
+  render :function () {
+    this.render();
+  },
+
   initialize: function (options) {
     this.myBuffer = options;
     console.log("yoyo ===> ", this.myBuffer);
     this.myEditValue = "";
+    this.render();
     
   },
   toggleMenu :function ()   {
@@ -164,4 +169,4 @@ removeColumn:function (){
   }
 });
 
-module.exports = taskContainer;
+export default taskContainer;

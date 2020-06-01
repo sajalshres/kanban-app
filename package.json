@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "npx webpack-dev-server"
+    "start": "npx webpack-dev-server",
+    "babel": "babel --presets es2015 app/index.js -o build/index.bundle.js",
+    "webpack": "webpack"
   },
   "repository": {
     "type": "git",
@@ -31,10 +33,14 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "underscore": "^1.8.3",
-    "underscore-template-loader": "^1.1.0",
-    "webpack": "^4.43.0"
+    "underscore-template-loader": "^1.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "multi-loader": "^0.1.0",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   }
