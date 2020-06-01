@@ -8,7 +8,7 @@ var taskContainer = Marionette.LayoutView.extend({
   tagName: "div",
   attributes: function () {
     return {
-      id: this.model.get("name"),
+      id: this.model.get("id"),
       class: "each-task",
       draggable: true,
     };
@@ -69,7 +69,7 @@ var taskContainer = Marionette.LayoutView.extend({
     <div id="edit-button">
     <input id="taskChanger" value="${this.model.get("name")}">
     <div id = "button-container"> 
-        <button class="btn btn-confirm" id="editConform">Confiem</button>
+        <button class="btn btn-confirm" id="editConform">Confirm</button>
         <button class="btn btn-cancel" id="editCancel">Cancel</button>
     </div>
            </div>`)
@@ -102,6 +102,7 @@ var taskContainer = Marionette.LayoutView.extend({
 
   initialize: function (options) {
     this.myBuffer = options;
+    console.log("yoyo ===> ", this.myBuffer);
     this.myEditValue = "";
     
   },

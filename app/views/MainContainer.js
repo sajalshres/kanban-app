@@ -2,11 +2,14 @@ var Marionette = require('backbone.marionette');
 var column_container = require('../views/columnContainer');
 var ColumnCollection = require('../collections/columns');
 var ColumnModel = require('../models/column');
+var variables = require('../services/variables')
 var TimeStamp = require("../services/timeNow")
 var $ = require('jquery');
 var tempArray = [];
+var columnCollection = new ColumnCollection();
+var columnModel = new ColumnModel();
 
-columnCollection = new ColumnCollection();
+
 
 
 
@@ -51,12 +54,11 @@ var Main_container = Marionette.CompositeView.extend({
         created_at: TimeStamp(),
         modified_at: null,
       });
-      columnCollection.add(columnModel);
-      columnModel.save({
+      columnModel.save(null, {
         success: function () {
           columnCollection.fetch({
-            sucees:function() {
-              this.render();
+            success:function() {
+              variables.columnCollection.fetch();
             }
           });
         }

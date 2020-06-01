@@ -1,5 +1,7 @@
 module.exports = {
     columnCollection: "",
     taskCollection: "",
-    bufferTaskCollection: ""
+    bufferTaskCollection: "",
+    mySourceId : "",
+    mySourceModel: ""
 }
