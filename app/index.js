@@ -1,15 +1,12 @@
-
-import  Marionette from "backbone.marionette";
-import  ColumnCollection from "./collections/columns";
+import Marionette from "backbone.marionette";
+import ColumnCollection from "./collections/columns";
 import Main_Container from "./views/MainContainer";
-import variables from './services/variables';
-import TaskCollection from './collections/tasks'
-var $ = require("jquery");
-var tempArray = [];
+import variables from "./services/variables";
+import TaskCollection from "./collections/tasks";
 
+var tempArray = [];
 variables.columnCollection = new ColumnCollection();
 variables.taskCollection = new TaskCollection();
-
 
 variables.columnCollection.fetch({
   success: () => {
@@ -24,18 +21,17 @@ variables.columnCollection.fetch({
 });
 
 variables.taskCollection.fetch({
-  success:  ()=>  {
-      for (var i = 0; i < variables.taskCollection.length; i++) {
-          if (!(_.contains(tempArray,  variables.taskCollection.at(i).get("name")))) {
-              tempArray.push(variables.taskCollection.at(i).get("name"))
-          }
+  success: () => {
+    for (var i = 0; i < variables.taskCollection.length; i++) {
+      if (!_.contains(tempArray, variables.taskCollection.at(i).get("name"))) {
+        tempArray.push(variables.taskCollection.at(i).get("name"));
       }
     }
+  },
 });
 
-
 var App = new Marionette.Application({
-  onStart: (options) =>{
+  onStart: (options) => {
     var mainContainer = new Main_Container({
       collection: options.initialData,
     });

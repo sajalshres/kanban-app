@@ -1,17 +1,15 @@
-var Marionette = require('backbone.marionette');
-import column_container from '../views/columnContainer';
-import  ColumnCollection from "../collections/columns";
-import  ColumnModel from '../models/column';
-var variables = require('../services/variables')
-var TimeStamp = require("../services/timeNow")
-var $ = require('jquery');
+var Marionette = require("backbone.marionette");
+import column_container from "../views/columnContainer";
+import ColumnCollection from "../collections/columns";
+import ColumnModel from "../models/column";
+import variables from "../services/variables";
+import TimeStamp from "../services/timeNow";
+import * as $ from "jquery";
+
 var tempArray = [];
 var columnCollection = new ColumnCollection();
 var columnModel = new ColumnModel();
 
-
-
-console.log(tempArray);
 var Main_container = Marionette.CompositeView.extend({
   el: "#tree",
   template: require("../templates/container.html"),
@@ -19,17 +17,15 @@ var Main_container = Marionette.CompositeView.extend({
   childViewContainer: "div#columns",
 
   ui: {
-    addColumn: '#new-column',
+    addColumn: "#new-column",
     addConfirm: "#addConfirm",
     addCancel: "#addCancel",
-
-
   },
   events: {
-    'click': "removeMenu",
-    'click @ui.addColumn': 'addColumn',
-    'click @ui.addConfirm': 'addConfirm',
-    'click @ui.addCancel': 'addCancel',
+    click: "removeMenu",
+    "click @ui.addColumn": "addColumn",
+    "click @ui.addConfirm": "addConfirm",
+    "click @ui.addCancel": "addCancel",
   },
 
   addColumn: function (event) {
@@ -41,11 +37,9 @@ var Main_container = Marionette.CompositeView.extend({
     console.log($("#columns").children().show());
     event.preventDefault();
     var inputVal = $("#colum-add-text").val();
-    if (inputVal === "" || (_.contains(tempArray, inputVal))) {
+    if (inputVal === "" || _.contains(tempArray, inputVal)) {
       alert("no input value or either the colum is already present");
-
-    }
-    else {
+    } else {
       console.log(inputVal);
       columnModel = new ColumnModel({
         name: inputVal,
@@ -56,23 +50,21 @@ var Main_container = Marionette.CompositeView.extend({
       columnModel.save(null, {
         success: function () {
           columnCollection.fetch({
-            success:function() {
+            success: function () {
               variables.columnCollection.fetch();
-            }
+            },
           });
-        }
-
+        },
       });
       $("#newColumnText").hide();
       $("#new-column").show();
     }
   },
 
-  removeMenu : function () {
-    $('.menu').css({
-      "display":"none"
-    })
-
+  removeMenu: function () {
+    $(".menu").css({
+      display: "none",
+    });
   },
 
   addCancel: function () {
@@ -83,13 +75,12 @@ var Main_container = Marionette.CompositeView.extend({
     columnCollection.fetch({
       success: function () {
         for (var i = 0; i < columnCollection.length; i++) {
-          tempArray.push(columnCollection.at(i).get("name"))
+          tempArray.push(columnCollection.at(i).get("name"));
         }
         console.log(tempArray);
-      }
+      },
     });
-  }
-
+  },
 });
 
-export default  Main_container;
+export default Main_container;

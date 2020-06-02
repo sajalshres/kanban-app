@@ -1,36 +1,22 @@
-var Marionette = require("backbone.marionette");
-import  taskContainer from "./taskContainer" ;
+import Marionette from "backbone.marionette";
+import taskContainer from "./taskContainer";
 import TaskCollection from "../collections/tasks";
-import  ColumnCollection from "../collections/columns";
-import  Task from "../models/task";
-var TimeStamp = require("../services/timeNow");
+import ColumnCollection from "../collections/columns";
+import Task from "../models/task";
+import TimeStamp from "../services/timeNow";
 import variables from "../services/variables";
-var $ = require("jquery");
-var _ = require("underscore")
-var Column = require('../models/column')
-var menuOpen = false;
-var tempArray = [];
-var mySource;
-var sourceId;
-var draggedItemId;
-var draggedItem;
+import * as $ from "jquery";
+import * as _ from "underscore";
 
-variables.taskCollection = new TaskCollection();
+
+var taskCollection = new TaskCollection();
 variables.bufferTaskCollection = new TaskCollection();
 variables.columnCollection = new ColumnCollection();
+var menuOpen = false;
 
-variables.taskCollection.fetch({});
-
-variables.taskCollection.fetch({
-  success: function () {
-    for (var i = 0; i < variables.taskCollection.length; i++) {
-      tempArray.push(variables.taskCollection.at(i).get("name"))
-
-    }
-  }
+taskCollection.fetch({
 });
-
-console.log(tempArray);
+ console.log(variables.taskCollection);
 
 var column_container = Marionette.CompositeView.extend({
   tagName: "div",
@@ -294,11 +280,15 @@ var column_container = Marionette.CompositeView.extend({
     this.inputValue = "";
     this.editValue = "";
     this.myTarget = "";
+    console.log(this.model);
     var items = this.model.get("items");
     console.log(items);
     var item_object = new Array();
     for (var id of items) {
-      item_object.push(variables.taskCollection.get(id));
+      console.log(item_object);
+      console.log(variables.taskCollection.get(id));
+      item_object.push(taskCollection.get(id));
+      console.log(item_object);
     }
     console.log(item_object);
     this.collection = new Backbone.Collection(item_object);
