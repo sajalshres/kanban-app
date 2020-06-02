@@ -1,11 +1,196 @@
-/* Define standard variables and values for website */
-$bgcolor: lightblue;
-$textcolor: darkblue;
-$fontsize: 18px;
+$primary-color: #f0f0f0;
+$secondary-color: #696969;
+$white: #ffffff;
+$font-stack: Helvetica, sans-serif;
 
-/* Use the variables */
 body {
-  background-color: $bgcolor;
-  color: $textcolor;
-  font-size: $fontsize;
+  font: 100% $font-stack;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+@mixin flex-start-row {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+@mixin flex-center-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#tree {
+  @include flex-start-row;
+}
+
+#columns {
+  @include flex-start-row;
+}
+
+.task-container {
+  display: flex;
+  padding: 5px;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 0 2px 0px 2px;
+  margin-left: 5px;
+  background-color: $primary-color;
+  width: 250px;
+}
+
+#header {
+  display: flex;
+  border-bottom: 2px solid rgb(160, 114, 114);
+  padding: 0.5rem;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: $white;
+}
+
+#element {
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.each-task {
+  display: flex;
+  background-color: $white;
+  margin-top: 0.2rem;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  :hover {
+    // background-color:$primary-color;
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
+}
+#task {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  i {
+    color: #696969;
+    margin-right: 5px;
+  }
+}
+
+.task-text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  width: 80%;
+}
+
+.menu {
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color: white;
+
+  .menu-options {
+    list-style: none;
+    padding: 10px 0;
+
+    .menu-option {
+      font-weight: 500;
+      font-size: 14px;
+      padding: 10px 40px 10px 20px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+#menu-element {
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color: white;
+
+  .menu-options {
+    list-style: none;
+    padding: 10px 0;
+
+    .menu-option {
+      font-weight: 500;
+      font-size: 14px;
+      padding: 10px 40px 10px 20px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+input {
+  height: 60px;
+  width: 150px;
+  border: 1px solid #b0e0e6;
+  margin: 15px;
+}
+
+#button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#edit-button {
+  @include flex-center-column;
+}
+
+.btn {
+  // background-color: #20b2aa;
+  border: none;
+  color: white;
+  width: 70px;
+  padding: 5px 7px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.btn-confirm{
+  background-color: #20b2aa;
+}
+.btn-cancel{
+  background-color: red;
+}
+
+#newColumn {
+  border: 1px solid black;
+  @include flex-center-column;
+  margin-left: 5px;
+  width: 10rem;
+  .fa {
+    font-size: 3em !important; /*size whatever you like*/
+  }
+}
+
+#newColumnText {
+  @include flex-center-column;
+  display: none;
+}
+.addButton {
+  @include flex-center-column;
 }
