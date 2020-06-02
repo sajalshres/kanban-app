@@ -25,7 +25,7 @@ if (typeof exports !== 'undefined' && this.exports !== exports) {
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const document = new JSDOM("<html><body></body></html>")).window;
+const document = new JSDOM("<html><body></body></html>").window;
 global.document = document;
 global.window = document.createWindow();
 
