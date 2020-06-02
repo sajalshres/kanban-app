@@ -1,14 +1,14 @@
 
 import  Marionette from "backbone.marionette";
-import TimeStamp from "./services/timeNow";
-var TaskCollection = require("./collections/tasks");
-var ColumnCollection = require("./collections/columns");
-var Main_Container = require("./views/MainContainer");
-var variables = require('./services/variables')
+import  ColumnCollection from "./collections/columns";
+import Main_Container from "./views/MainContainer";
+import variables from './services/variables';
+import TaskCollection from './collections/tasks'
 var $ = require("jquery");
 var tempArray = [];
 
 variables.columnCollection = new ColumnCollection();
+variables.taskCollection = new TaskCollection();
 
 
 variables.columnCollection.fetch({

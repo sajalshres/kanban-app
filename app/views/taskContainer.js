@@ -1,9 +1,13 @@
 import  Marionette from "backbone.marionette";
-var variables = require("../services/variables");
-var $ = require("jquery");
+import variables from "../services/variables";
+import jquery from 'jquery';
+
 var _ = require("underscore");
 var TimeStamp = require("../services/timeNow")
+
 var menuOpen =false;
+var $ = jquery;
+
 var taskContainer = Marionette.LayoutView.extend({
   tagName: "div",
   attributes: function () {
@@ -99,11 +103,6 @@ var taskContainer = Marionette.LayoutView.extend({
 
 
   template: require("../templates/element.html"),
-
-  render :function () {
-    this.render();
-  },
-
   initialize: function (options) {
     this.myBuffer = options;
     console.log("yoyo ===> ", this.myBuffer);

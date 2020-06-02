@@ -1,8 +1,10 @@
-var Backbone = require("backbone");
-var column = require("../models/column");
+import Backbone from 'backbone';
+import columnModel from "../models/column";
 
-module.exports = Backbone.Collection.extend({
+var  ColumnCollection = Backbone.Collection.extend({
   url: "http://localhost:3000/columns",
-  model: column,
+  model: columnModel,
   initialize: function () {},
 });
+
+export default ColumnCollection;
