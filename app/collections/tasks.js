@@ -1,4 +1,4 @@
-import Backbone from 'backbone';
+var Backbone =require('backbone');
 var task = require("../models/task");
 
 var TaskCollection = Backbone.Collection.extend({
@@ -7,4 +7,4 @@ var TaskCollection = Backbone.Collection.extend({
   initialize: function () {},
 });
 
-export default TaskCollection;
+module.exports = TaskCollection;

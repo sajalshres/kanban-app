@@ -1,4 +1,4 @@
-import Backbone from 'backbone';
+var Backbone = require('backbone');
 
 var columnModel  = Backbone.Model.extend({
   url: function () {
@@ -12,4 +12,4 @@ var columnModel  = Backbone.Model.extend({
   initialize: function () {},
 });
 
-export default columnModel;
+module.exports = columnModel

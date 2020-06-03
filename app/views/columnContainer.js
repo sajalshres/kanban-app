@@ -1,19 +1,15 @@
 var Marionette = require("backbone.marionette");
-import  taskContainer from "./taskContainer" ;
-import TaskCollection from "../collections/tasks";
-import  ColumnCollection from "../collections/columns";
-import  Task from "../models/task";
+var  taskContainer = require("./taskContainer") ;
+var TaskCollection = require("../collections/tasks");
+var  ColumnCollection = require("../collections/columns");
+var  Task = require("../models/task");
 var TimeStamp = require("../services/timeNow");
-import variables from "../services/variables";
+var variables = require("../services/variables");
 var $ = require("jquery");
 var _ = require("underscore")
-var Column = require('../models/column')
 var menuOpen = false;
 var tempArray = [];
-var mySource;
-var sourceId;
-var draggedItemId;
-var draggedItem;
+
 
 variables.taskCollection = new TaskCollection();
 variables.bufferTaskCollection = new TaskCollection();
@@ -312,4 +308,4 @@ var column_container = Marionette.CompositeView.extend({
 }
 );
 
-export default column_container;
+module.exports = column_container;

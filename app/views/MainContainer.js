@@ -1,7 +1,7 @@
 var Marionette = require('backbone.marionette');
-import column_container from '../views/columnContainer';
-import  ColumnCollection from "../collections/columns";
-import  ColumnModel from '../models/column';
+var column_container = require('../views/columnContainer');
+var  ColumnCollection = require("../collections/columns");
+var  ColumnModel = require('../models/column');
 var variables = require('../services/variables')
 var TimeStamp = require("../services/timeNow")
 var $ = require('jquery');
@@ -92,4 +92,4 @@ var Main_container = Marionette.CompositeView.extend({
 
 });
 
-export default  Main_container;
+module.exports = Main_container;

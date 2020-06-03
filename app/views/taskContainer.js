@@ -1,10 +1,8 @@
-import  Marionette from "backbone.marionette";
-import variables from "../services/variables";
-import jquery from 'jquery';
-
+var Marionette = require("backbone.marionette");
+var variables = require("../services/variables");
+var jquery = require('jquery');
 var _ = require("underscore");
 var TimeStamp = require("../services/timeNow")
-
 var menuOpen =false;
 var $ = jquery;
 
@@ -168,4 +166,4 @@ removeColumn:function (){
   }
 });
 
-export default taskContainer;
+module.exports = taskContainer;

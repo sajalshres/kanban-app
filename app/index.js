@@ -1,9 +1,9 @@
 
-import  Marionette from "backbone.marionette";
-import  ColumnCollection from "./collections/columns";
-import Main_Container from "./views/MainContainer";
-import variables from './services/variables';
-import TaskCollection from './collections/tasks'
+var  Marionette = require("backbone.marionette");
+var  ColumnCollection = require("./collections/columns");
+var Main_Container = require("./views/MainContainer");
+var variables = require('./services/variables');
+var TaskCollection = require('./collections/tasks');
 var $ = require("jquery");
 var tempArray = [];
 
@@ -42,3 +42,5 @@ var App = new Marionette.Application({
     mainContainer.render();
   },
 });
+
+
