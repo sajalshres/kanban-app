@@ -113,4 +113,4 @@ describe('Services Initialization Test', function(){
 })
 
 
-require('./frontend_tests/view.test')
+// require('./frontend_tests/view.test')
