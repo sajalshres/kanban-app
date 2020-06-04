@@ -6,4 +6,4 @@
     mySourceModel: ""
 }
 
-export default variables;
+module.exports = variables;

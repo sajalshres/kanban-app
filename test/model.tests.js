@@ -2,6 +2,8 @@ const Task = require("../app/models/task");
 const Column = require("../app/models/column");
 const Tasks = require("../app/collections/tasks");
 const Columns = require("../app/collections/columns");
+const TimeStamp = require("../app/services/timeNow");
+let variables = require("../app/services/variables")
 const chai = require("chai");
 const assert = chai.assert;
 const expect = chai.expect;
@@ -88,3 +90,25 @@ describe("Model and collection tests", function () {
       })
   })
 });
+
+
+
+
+describe('Services Initialization', function(){
+  describe("TimeStamp Service", function(){
+    it("Should return String", function(){
+      assert.typeOf(TimeStamp(), 'string');
+    })
+
+    it("Should not contain alphabets", function(){
+      expect(TimeStamp()).to.not.match(/[a-zA-Z]+/)
+    })
+  })
+
+  describe("Variables Service", function(){
+    it("Should have defined keys", function(){
+      expect(variables).to.have.all.keys('columnCollection', 'taskCollection', 'bufferTaskCollection', 'mySourceId', 'mySourceModel');
+    })
+  })
+})
+
