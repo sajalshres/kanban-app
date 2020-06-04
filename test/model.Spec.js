@@ -7,6 +7,7 @@ let variables = require("../app/services/variables")
 const chai = require("chai");
 const assert = chai.assert;
 const expect = chai.expect;
+var  mainContainer = require('../app/views/MainContainer');
 // const view_Test = require('./frontend_tests/view.test')
 
 
@@ -113,4 +114,4 @@ describe('Services Initialization Test', function(){
 })
 
 
-require('./frontend_tests/view.test')
+// require('./frontend_tests/view.test');
