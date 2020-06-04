@@ -2,7 +2,7 @@
 A KanBan swim lane application based on BackBoneJS and MarionetteJS
 
 
-#Source
+# Source
 
 1. Core framework Concepts
 
@@ -34,7 +34,7 @@ json-server
     - https://www.npmjs.com/package/json-server
 
 
-#Running Program
+# Running Program
 
 1. Copy url:- https://github.com/sajalshres/kanban-app.git
 2. Clone into a directory
