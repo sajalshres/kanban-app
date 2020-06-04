@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sajalshres/kanban-app#readme",
   "dependencies": {
+    "@babel/register": "^7.10.1",
     "backbone": "^1.4.0",
     "backbone.babysitter": "^0.1.12",
     "backbone.marionette": "^2.4.7",
