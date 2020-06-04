@@ -1,15 +1,14 @@
 var Marionette = require("backbone.marionette");
-var  taskContainer = require("./taskContainer") ;
+var taskContainer = require("./taskContainer");
 var TaskCollection = require("../collections/tasks");
-var  ColumnCollection = require("../collections/columns");
-var  Task = require("../models/task");
+var ColumnCollection = require("../collections/columns");
+var Task = require("../models/task");
 var TimeStamp = require("../services/timeNow");
 var variables = require("../services/variables");
 var $ = require("jquery");
-var _ = require("underscore")
+var _ = require("underscore");
 var menuOpen = false;
 var tempArray = [];
-
 
 variables.taskCollection = new TaskCollection();
 variables.bufferTaskCollection = new TaskCollection();
@@ -20,10 +19,9 @@ variables.taskCollection.fetch({});
 variables.taskCollection.fetch({
   success: function () {
     for (var i = 0; i < variables.taskCollection.length; i++) {
-      tempArray.push(variables.taskCollection.at(i).get("name"))
-
+      tempArray.push(variables.taskCollection.at(i).get("name"));
     }
-  }
+  },
 });
 
 console.log(tempArray);
@@ -61,36 +59,20 @@ var column_container = Marionette.CompositeView.extend({
     "click @ui.conform": "conformEdit",
     "click #cancelLoad": "cancelLoad",
     "drag .each-task": "draggable",
-    "drop": "dropper",
+    drop: "dropper",
     "dragstart .each-task": "dragstart",
-    "dragover": "dragover",
+    dragover: "dragover",
     "click #new-column": "addColumn",
-    "click #cancel-add":"canceler",
+    "click #cancel-add": "canceler",
   },
 
-  canceler:function () {
+  canceler: function () {
     this.render();
   },
   dragover: function (event) {
     event.preventDefault();
   },
-  dragstart: function (event) {
-    // var id = event.target.id;
-    // sel = "#" + id;
-    // $(sel).css({
-    //   "border": "2px solid black",
-    // })
-    // mySource = event.target.id;
-    // sourceId = this.model.get("items");
-    // draggedItem = this.model;
-    // variables.taskCollection.each((target) => {
-    //   if (target.get("name") === mySource) {
-    //     draggedItemId = target.get("id");
-    //   }
-    // })
-
-
-  },
+  dragstart: function (event) {},
   draggable: function (event) {
     variables.mySourceId = event.target.id;
     variables.mySourceModel = this.model;
@@ -99,43 +81,38 @@ var column_container = Marionette.CompositeView.extend({
     this.myTarget = event.target.id;
     let titleArray = new Array();
 
-    variables.columnCollection.each((model)=>{
+    variables.columnCollection.each((model) => {
       titleArray.push(model.get("name"));
-    })
-    if(_.contains(titleArray, this.myTarget)){
+    });
+    if (_.contains(titleArray, this.myTarget)) {
       var tempModel;
-      variables.taskCollection.each((model)=>{
-        if(model.get("id") == variables.mySourceId){
+      variables.taskCollection.each((model) => {
+        if (model.get("id") == variables.mySourceId) {
           tempModel = model;
         }
-      })
+      });
       let tempArray = variables.mySourceModel.get("items");
-      tempArray.splice(tempArray.indexOf(tempModel.get("id")),1);
+      tempArray.splice(tempArray.indexOf(tempModel.get("id")), 1);
       variables.mySourceModel.set("items", tempArray);
       tempArray = this.model.get("items");
       tempArray.unshift(tempModel.get("id"));
       this.model.set("items", tempArray);
       variables.mySourceModel.save(null, {
-        success: ()=>{
+        success: () => {
           this.model.save(null, {
-            success: ()=>{
+            success: () => {
               variables.columnCollection.reset(null);
               variables.columnCollection.fetch();
             },
-            error:()=>{
-
-            }
-          })
+            error: () => {},
+          });
         },
-        error: ()=>{
-
-        }
-      })
+        error: () => {},
+      });
     }
   },
   addColumn: function () {
     alert("new column added");
-
   },
   removeColumn() {
     this.toggleMenu();
@@ -143,7 +120,7 @@ var column_container = Marionette.CompositeView.extend({
       success: function () {
         console.log("remove succesful");
       },
-      error: function () { },
+      error: function () {},
     });
   },
 
@@ -183,7 +160,7 @@ var column_container = Marionette.CompositeView.extend({
       success: () => {
         self.render();
       },
-      error: () => { },
+      error: () => {},
     });
   },
 
@@ -212,14 +189,14 @@ var column_container = Marionette.CompositeView.extend({
             self.model.set("items", buff_array);
             self.model.set("modified_at", TimeStamp());
             self.model.save(null, {
-              success: () => { },
-              error: () => { },
+              success: () => {},
+              error: () => {},
             });
           },
-          error: () => { },
+          error: () => {},
         });
       },
-      error: () => { },
+      error: () => {},
     });
     self.$("#newTask").val("");
     self.render();
@@ -228,8 +205,8 @@ var column_container = Marionette.CompositeView.extend({
   addTask: function (e) {
     this.toggleMenu();
     e.stopPropagation();
-    console.log("wow");
-    this.$("#header").html(`<div id ="edit-button"> <input type="text" id="newTask" value="">
+    this.$("#header")
+      .html(`<div id ="edit-button"> <input type="text" id="newTask" value="">
     <div id="button-container">
     <button class="btn btn-confirm" id="addTask">Add</button>
     <button class="btn btn-cancel" id="cancelAdd">Cancel</button>
@@ -238,53 +215,42 @@ var column_container = Marionette.CompositeView.extend({
   },
 
   toggleMenu: function (id) {
-    $('.menu').css({
-      "display": "none"
-    })
+    $(".menu").css({
+      display: "none",
+    });
     menuOpen = !menuOpen;
-
-    this.$('.menu').css({
+    this.$(".menu").css({
       display: function () {
         if (menuOpen) {
-          return 'block';
+          return "block";
+        } else {
+          return "none";
         }
-        else {
-          return 'none';
-        }
-      }
+      },
     });
-
   },
   displayMenu: function (e) {
     e.preventDefault();
     const origin = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     };
     var id = this.model.get("name");
     console.log(id);
     this.setPosition(origin, id);
     return false;
-
-
   },
-
   setPosition: function ({ top, left }, id) {
-    this.$('.menu').css({
-      'left': `${left}px`,
-      'top': `${top + 10}px`
+    this.$(".menu").css({
+      left: `${left}px`,
+      top: `${top + 10}px`,
     });
     console.log(top, left);
     this.toggleMenu(id);
   },
 
-
-
   childView: taskContainer,
-
   childViewContainer: "div#element",
-
-
 
   initialize: function () {
     this.inputValue = "";
@@ -302,10 +268,9 @@ var column_container = Marionette.CompositeView.extend({
 
   childViewOptions: function (model, index) {
     return {
-      parent: this.model
-    }
-  }
-}
-);
+      parent: this.model,
+    };
+  },
+});
 
 module.exports = column_container;

@@ -7,6 +7,8 @@ let variables = require("../app/services/variables")
 const chai = require("chai");
 const assert = chai.assert;
 const expect = chai.expect;
+// const view_Test = require('./frontend_tests/view.test')
+
 
 describe("Model and collection tests", function () {
   let task1, task2, task3, tasks, columns, column1, column2;
@@ -52,8 +54,6 @@ describe("Model and collection tests", function () {
 
     tasks = new Tasks([task1, task2, task3]);
     columns = new Columns([column1, column2]);
-    console.log(columns.models)
-
   });
   describe("Model Initialization", function () {
 
@@ -94,7 +94,7 @@ describe("Model and collection tests", function () {
 
 
 
-describe('Services Initialization', function(){
+describe('Services Initialization Test', function(){
   describe("TimeStamp Service", function(){
     it("Should return String", function(){
       assert.typeOf(TimeStamp(), 'string');
@@ -112,3 +112,5 @@ describe('Services Initialization', function(){
   })
 })
 
+
+require('./frontend_tests/view.test')

@@ -1,9 +1,9 @@
 var Marionette = require("backbone.marionette");
 var variables = require("../services/variables");
-var jquery = require('jquery');
+var jquery = require("jquery");
 var _ = require("underscore");
-var TimeStamp = require("../services/timeNow")
-var menuOpen =false;
+var TimeStamp = require("../services/timeNow");
+var menuOpen = false;
 var $ = jquery;
 
 var taskContainer = Marionette.LayoutView.extend({
@@ -26,46 +26,49 @@ var taskContainer = Marionette.LayoutView.extend({
     "input #taskChanger": "syncer",
     "click #editConform": "editSubmit",
     "click #editCancel": "canceler",
-    "click #editTask": 'editTask',
-    "click #removeTask": 'removeTask',
+    "click #editTask": "editTask",
+    "click #removeTask": "removeTask",
     "click #task-action": "displayMenu",
-
   },
 
-  canceler:function(){
-    this.render()
+  canceler: function () {
+    this.render();
   },
 
-  editSubmit:function(){
+  editSubmit: function () {
     var self = this;
     this.model.set("name", this.myEditValue);
     this.model.set("modified_at", TimeStamp());
     this.model.save(null, {
-      success:function(){self.render()},
-      error:function(){}
-    })
-
+      success: function () {
+        self.render();
+      },
+      error: function () {},
+    });
   },
 
-  syncer: function(e){
-    this.myEditValue = this.$('#taskChanger').val();
+  syncer: function (e) {
+    this.myEditValue = this.$("#taskChanger").val();
     console.log(this.myEditValue);
-    if((this.myEditValue === this.model.get("name")) || this.myEditValue === "" ){
-      this.$('#editConform').prop("disabled", true);
-    }else{
-      this.$('#editConform').prop("disabled", false);
+    if (
+      this.myEditValue === this.model.get("name") ||
+      this.myEditValue === ""
+    ) {
+      this.$("#editConform").prop("disabled", true);
+    } else {
+      this.$("#editConform").prop("disabled", false);
     }
   },
 
-  tempLoader:function(e){
+  tempLoader: function (e) {
     e.stopPropagation();
   },
 
-  mover: function(e){
+  mover: function (e) {
     e.stopPropagation();
     console.log(this.$("#move").val());
   },
-  editTask: function() {
+  editTask: function () {
     this.toggleMenu();
     this.$("#task").html(`
     <div id="edit-button">
@@ -74,31 +77,24 @@ var taskContainer = Marionette.LayoutView.extend({
         <button class="btn btn-confirm" id="editConform">Confirm</button>
         <button class="btn btn-cancel" id="editCancel">Cancel</button>
     </div>
-           </div>`)
-           this.$('#editConform').prop("disabled", true);
-        
-
+           </div>`);
+    this.$("#editConform").prop("disabled", true);
   },
-  removeTask: function(){
+  removeTask: function () {
     this.toggleMenu();
     console.log(this.model);
-    var {parent} = this.myBuffer
+    var { parent } = this.myBuffer;
     var tempArray = parent.get("items");
-    tempArray.splice(tempArray.indexOf(this.model.get("id")),1);
-      parent.set("items", tempArray);
-      parent.set("modified_at", TimeStamp());
-      parent.save(null, {
-        success:function(){
-          this.model.destroy();
-        },
-        error:function(){
-
-        }
-      })
-   
+    tempArray.splice(tempArray.indexOf(this.model.get("id")), 1);
+    parent.set("items", tempArray);
+    parent.set("modified_at", TimeStamp());
+    parent.save(null, {
+      success: function () {
+        this.model.destroy();
+      },
+      error: function () {},
+    });
   },
-
-
 
   template: require("../templates/element.html"),
   initialize: function (options) {
@@ -106,64 +102,67 @@ var taskContainer = Marionette.LayoutView.extend({
     console.log("yoyo ===> ", this.myBuffer);
     this.myEditValue = "";
     this.render();
-    
   },
-  toggleMenu :function ()   {
-
-    $('#menu-element').css({
-        "display":"none"
-    }) 
-    menuOpen =!menuOpen;
-
-    this.$('#menu-element').css({
-        display: function(){
-            if (menuOpen){
-                return 'block';
-            }
-            else {
-                return 'none';
-            }
-        }
+  toggleMenu: function () {
+    $("#menu-element").css({
+      display: "none",
     });
-  
+    menuOpen = !menuOpen;
+
+    this.$("#menu-element").css({
+      display: function () {
+        if (menuOpen) {
+          return "block";
+        } else {
+          return "none";
+        }
+      },
+    });
   },
-  displayMenu: function(e) {
+  displayMenu: function (e) {
     e.preventDefault();
     const origin = {
-        left: e.clientX,
-        top: e.clientY
-      };
+      left: e.clientX,
+      top: e.clientY,
+    };
     var id = this.model.get("name");
-    this.setPosition(origin,id);
-      return false;
-  
+    this.setPosition(origin, id);
+    return false;
+  },
 
-},
-
-setPosition: function ({ top, left },id)  {
-    this.$('#menu-element').css({'left':`${left}px`,
-   'top': `${top+5}px`});
-   console.log("position")
+  setPosition: function ({ top, left }, id) {
+    this.$("#menu-element").css({ left: `${left}px`, top: `${top + 5}px` });
+    console.log("position");
     this.toggleMenu();
   },
 
-removeColumn:function (){
+  removeColumn: function () {
     this.collection.remove(this.model);
     this.model.destroy();
     this.toggleMenu();
-   
-},
+  },
 
-  onRender:function(){
+  onRender: function () {
     var pointer = this;
-    
+
     console.log(variables.columnCollection);
     for (var i = 0; i < variables.columnCollection.length; i++) {
-      if (variables.columnCollection.at(i).get("id") != pointer.myBuffer.parent.get("id")) {
-        pointer.$('#opt').append(`<option id="move" class="menu-option" value="${variables.columnCollection.at(i).get("id")}">${variables.columnCollection.at(i).get("name")}</option>`);
+      if (
+        variables.columnCollection.at(i).get("id") !=
+        pointer.myBuffer.parent.get("id")
+      ) {
+        pointer
+          .$("#opt")
+          .append(
+            `<option id="move" class="menu-option" value="${variables.columnCollection
+              .at(i)
+              .get("id")}">${variables.columnCollection
+              .at(i)
+              .get("name")}</option>`
+          );
       }
     }
-  }
+  },
 });
 
 module.exports = taskContainer;
