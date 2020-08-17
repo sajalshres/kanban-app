@@ -1,39 +1,41 @@
-var Collection = require('./collections/collection')
-var  TodosView =require( './views/todoListView');
-var lanesView = require('./views/lanesView');
-var _ = require('underscore');
-var $= require('jquery');
+var Marionette = require("backbone.marionette");
+var ColumnCollection = require("./collections/columns");
+var Main_Container = require("./views/MainContainer");
+var variables = require("./services/variables");
+var TaskCollection = require("./collections/tasks");
+var $ = require("jquery");
 var tempArray = [];
 
-checker = () => {
-    tasks.fetch({
-        success: () => {
-            for (var i=0;i<tasks.length;i++){
-                if(!(_.contains(tempArray,tasks.at(i).get("status")))){
-                    tempArray.push(tasks.at(i).get("status"))
-                }
-            }
+variables.columnCollection = new ColumnCollection();
+variables.taskCollection = new TaskCollection();
 
-            for (i of tempArray){
-                var selector= "#"+i;
-                var div= document.createElement("div");
-                div.id=i;
-                div.className="card";
-                $("#contain").append(div);
-                (new TodosView({ el: selector, model: tasks, option: i,tempArray })).render();
-            }
-        },error: () => {
-            console.log("server down")
-        }
-    })
-}
+variables.columnCollection.fetch({
+  success: () => {
+    App.start({ initialData: variables.columnCollection });
+  },
+  error: () => {
+    alert("Server down!!");
+  },
+  error: () => {
+    alert("Server down!!");
+  },
+});
 
+variables.taskCollection.fetch({
+  success: () => {
+    for (var i = 0; i < variables.taskCollection.length; i++) {
+      if (!_.contains(tempArray, variables.taskCollection.at(i).get("name"))) {
+        tempArray.push(variables.taskCollection.at(i).get("name"));
+      }
+    }
+  },
+});
 
-var div = document.createElement("div");
-div.id = "addLane";
-$("#addLane").append(div);
-var newLanesView = new lanesView({ el: "#addLane" ,tempArray});
-var tasks = new Collection.Tasks();
-newLanesView.render();
-checker();
-
+var App = new Marionette.Application({
+  onStart: (options) => {
+    var mainContainer = new Main_Container({
+      collection: options.initialData,
+    });
+    mainContainer.render();
+  },
+});
