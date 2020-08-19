@@ -10,5 +10,7 @@ router.register('item', views.ItemView)
 
 urlpatterns = [
 
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('create-user', views.createUser),
+    path('delete-user', views.deleteUser)
 ]

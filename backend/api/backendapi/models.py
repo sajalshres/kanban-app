@@ -1,9 +1,11 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 
 class Board(models.Model):
+    ''' Create table Board with name(type-character) and user(type-User object).'''
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='boards')
     name = models.CharField(max_length=500)
 
     def __str__(self):
@@ -11,6 +13,7 @@ class Board(models.Model):
 
 
 class Todo(models.Model):
+    '''Create table Todo with name(type - character) and user (type-Board object).'''
     name = models.CharField(max_length=1000)
     board = models.ForeignKey(
         Board, on_delete=models.CASCADE, related_name='todos')
@@ -20,6 +23,7 @@ class Todo(models.Model):
 
 
 class Item(models.Model):
+    '''Create table Item with name(character) description(character),completed(boolean) and todo(Todo object).'''
     name = models.CharField(max_length=500)
     description = models.CharField(max_length=500)
     completed = models.BooleanField()
