@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 const { resolve } = require('path');
 var webpack = require('webpack');
 
@@ -32,5 +33,6 @@ module.exports = {
   resolveLoader: {
     modules: [__dirname + '/node_modules']
   }
+
 };
 
