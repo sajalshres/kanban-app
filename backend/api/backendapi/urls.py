@@ -7,10 +7,8 @@ router = routers.DefaultRouter()
 router.register('board', views.BoardView)
 router.register('todo', views.TodoView)
 router.register('item', views.ItemView)
-
+router.register('user', views.UserView)
 urlpatterns = [
-
     path('', include(router.urls)),
-    path('create-user', views.createUser)
-
+    path('api-auth', include('rest_framework.urls'))
 ]

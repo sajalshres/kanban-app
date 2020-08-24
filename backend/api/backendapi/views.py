@@ -1,12 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.contrib.auth.models import User
+from django.core.exceptions import FieldError, ValidationError
 from django.http import HttpResponse
 from .models import Board, Todo, Item
-from .serializers import BoardSerializer, ItemSerializer, TodoSerializer
+from .validator import BoardValidator, TodoValidator, ItemValidator, UserValidator
+from .serializers import BoardSerializer, ItemSerializer, TodoSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view
 
 
@@ -18,54 +20,22 @@ class BoardView(viewsets.ModelViewSet):
     serializer_class = BoardSerializer
     lookup_field = 'id'
 
+    def get_queryset(self):
+        return Board.objects.filter(user=self.request.user)
+
     def create(self, request):
-        '''
-        Create new board and save it under logged in user.
-
-        Arguement : request of type POST
-
-        Returns :
-           Failure -> Response object with "Error" : "could not create board" and 404 BAD REQUEST
-           Success -> Response object with "new board": "new board created" and 201 CREATED
-        '''
+        '''Create new board and save it under logged in user.'''
+        userObj = get_object_or_404(User, username=request.user)
         try:
-            userObj = User.objects.get(username=request.user)
-            board = Board.objects.create(
-                user=userObj, name=request.data['name'])
-
-        except:
-            return Response({"error": "board not created"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"board": board.name}, status=status.HTTP_201_CREATED)
-
-    def list(self, request):
-        '''Return list of all Boards its todos with its items available under logged in user'''
-        queryset = Board.objects.filter(user=request.user)
-        serializer = BoardSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, id=None):
-        '''Return board its todos with its items with specific id.'''
-        queryset = Board.objects.filter(user=request.user, id=id)
-        if queryset.exists():
-            serializer_class = BoardSerializer(queryset, many=True)
-            return Response(serializer_class.data, status=status.HTTP_200_OK)
-        return Response({"error": "board not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    def update(self, request, id=None):
-        '''Update board with specific id'''
-        queryset = Board.objects.filter(user=request.user, id=id)
-        if queryset.exists():
-            serializer_class = BoardSerializer(queryset)
-            return super().update(request, id)
-        return Response({"error": "board not updated"}, status=status.HTTP_403_FORBIDDEN)
-
-    def destroy(self, request, id=None):
-        '''Delete board with specific id'''
-        queryset = Board.objects.filter(user=request.user, id=id)
-        if queryset.exists():
-            serializer_class = BoardSerializer(queryset)
-            return super().destroy(request, id)
-        return Response({"error": "board not deleted"}, status=status.HTTP_403_FORBIDDEN)
+            if BoardValidator(request.data).is_valid():
+                name = request.data['name']
+                boardObj = Board.objects.create(user=userObj, name=name)
+                serialized = BoardSerializer(boardObj)
+                return Response(serialized.data, status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError("please provide valid board name")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TodoView(viewsets.ModelViewSet):
@@ -76,65 +46,47 @@ class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
     lookup_field = 'id'
 
+    def get_queryset(self):
+        boardObj = Board.objects.filter(user=self.request.user)
+        return Todo.objects.filter(board__in=boardObj)
+
     def create(self, request):
-        '''
-        Create new todo linking it under certain board and save it under logged in user.
-
-        Arguement : request of type POST
-
-        Returns :
-           Failure -> Response object with "Error" : "could not create todo" and 404 BAD REQUEST
-           Success -> Response object with "new board": "new todo created" and 201 CREATED
-        '''
+        '''Create new todo linking it under certain board and save it under logged in user.'''
+        userObj = get_object_or_404(User, username=request.user)
         try:
-            board = Board.objects.get(
-                user=request.user, id=request.data['board'])
-            todo = Todo.objects.create(board=board, name=request.data['name'])
-            todo.save()
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
-            return Response({"error": "todo not created"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"success": "new todo created"}, status=status.HTTP_201_CREATED)
-
-    def list(self, request):
-        '''Return list of all Todos and its items available under logged in user'''
-        board = Board.objects.filter(user=request.user)
-        queryset = Todo.objects.filter(board__in=board)
-        serializer = TodoSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, id=None):
-        '''Return specific Todos and its items  as per id if available under logged in user'''
-        board = Board.objects.filter(user=request.user)
-        queryset = Todo.objects.filter(board__in=board, id=id)
-        if queryset.exists():
-            serializer = TodoSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({"Data": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+            if TodoValidator(request.data).is_valid():
+                boardid = request.data['board']
+                name = request.data['name']
+                boardObj = get_object_or_404(Board, user=userObj, id=boardid)
+                todo = Todo.objects.create(board=boardObj, name=name)
+                serialized = TodoSerializer(todo)
+                return Response(serialized.data, status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError(
+                    "please provide valid todo name and board id")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, id=None):
         '''Update specific Todo as per id'''
-
-        # Check if board id given exists and belongs to user
-        board = Board.objects.filter(
-            user=request.user, id=request.data['board'])
-        if(board.exists()):
-            board = Board.objects.filter(
-                user=request.user)
-            queryset = Todo.objects.filter(board__in=board, id=id)
-            if queryset.exists():
-                serializer_class = TodoSerializer(queryset)
-                return super().update(request, id)
-        return Response({"Data": "Could Not Update"}, status=status.HTTP_400_BAD_REQUEST)
-
-    def destroy(self, request, id=None):
-        '''Delete specific Todo as per id'''
-        board = Board.objects.filter(user=request.user)
-        queryset = Todo.objects.filter(board__in=board, id=id)
-        if(queryset.exists()):
-            serializer_class = TodoSerializer(queryset)
-            return super().destroy(request, id)
-        return Response({"Error": "Could Not Delete"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            if TodoValidator(request.data).is_valid():
+                boardid = request.data['board']
+                name = request.data['name']
+                # Below line checks if board id to which todo is to be kept after update, exists and belongs to user
+                boardObj = get_object_or_404(
+                    Board, user=request.user, id=boardid)
+                boardObj = get_list_or_404(Board, user=request.user)
+                todoObj = get_object_or_404(Todo, board__in=boardObj, id=id)
+                todoObj.name = name
+                todoObj.save()
+                serializer = TodoSerializer(todoObj)
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            else:
+                raise ValidationError(
+                    "please provide valid todo name and board id")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ItemView(viewsets.ModelViewSet):
@@ -145,82 +97,84 @@ class ItemView(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     lookup_field = 'id'
 
+    def get_queryset(self):
+        boardObj = Board.objects.filter(user=self.request.user)
+        todoObj = Todo.objects.filter(board__in=boardObj)
+        return Item.objects.filter(todo__in=todoObj)
+
     def create(self, request):
-        '''
-        Create new item linking it under todo , board and save it under logged in user.
-
-        Arguement : request of type POST
-
-        Returns :
-           Failure -> Response object with "Error" : "could not create item" and 404 BAD REQUEST
-           Success -> Response object with "new board": "new item created" and 201 CREATED
-        '''
+        '''Create new item linking it under todo , board and save it under logged in user.'''
         try:
-
-            board = Board.objects.filter(user=request.user)
-
-            todo = Todo.objects.get(board__in=board, id=request.data['todo'])
-
-            item = Item.objects.create(
-                todo=todo, description=request.data['description'], completed=bool(request.data['completed']), name=request.data['name'])
-            item.save()
+            if ItemValidator(request.data).is_valid():
+                description = request.data['description']
+                completed = request.data['completed']
+                name = request.data['name']
+                boardObj = get_list_or_404(Board, user=request.user)
+                todo = get_object_or_404(
+                    Todo, board__in=boardObj, id=request.data['todo'])
+                item = Item.objects.create(
+                    todo=todo, description=description, completed=completed, name=name)
+                serializer = ItemSerializer(item)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError(
+                    "please provide valid item name,description,completed and todo id")
         except Exception as e:
-            print(e)
-            return Response({"Error": "Could not create the Item"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"success": "new item created"}, status=status.HTTP_201_CREATED)
-
-    def list(self, request):
-        '''Get all the available  Item under all todos'''
-        board = Board.objects.filter(user=request.user)
-        todo = Todo.objects.filter(board__in=board)
-        queryset = Item.objects.filter(todo__in=todo)
-        serializer = ItemSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, id=None):
-        '''Get the specific item as per id'''
-        board = Board.objects.filter(user=request.user)
-        todo = Todo.objects.filter(board__in=board)
-        queryset = Item.objects.filter(todo__in=todo, id=id)
-        if queryset.exists():
-            serializer = ItemSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({"Data": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, id=None):
         '''Update specific item as per id'''
-        board = Board.objects.filter(user=request.user)
-        todo = Todo.objects.filter(
-            board__in=board, id=request.data['todo'])
-        if todo.exists():
-            todo = Todo.objects.filter(board__in=board)
-            queryset = Item.objects.filter(todo__in=todo)
-            if queryset.exists():
-                serializer_class = ItemSerializer(queryset)
-                return super().update(request, id)
-        return Response({"Data": "Could Not Update"}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id=None):
-        '''Delete specific item as per id'''
-        board = Board.objects.filter(user=request.user)
-        todo = Todo.objects.filter(
-            board__in=board, id=request.data['todo'])
-        queryset = Item.objects.filter(todo__in=todo, id=id)
-        if(queryset.exists()):
-            serializer_class = ItemSerializer(queryset)
-            return super().destroy(request, id)
-        return Response({"Data": "Could Not Delete"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            if ItemValidator(request.data).is_valid():
+                todoid = request.data['todo']
+                itemname = request.data['name']
+                description = request.data['description']
+                completed = request.data['completed']
+                # Check if todo with which item to be linked after update is authenticated
+                boardObj = get_list_or_404(Board, user=request.user)
+                todoObj = get_object_or_404(
+                    Todo, board__in=boardObj, id=todoid)
+                todoObj = get_list_or_404(Todo, board__in=boardObj)
+                itemObj = get_object_or_404(Item, todo__in=todoObj, id=id)
+                itemObj.name = itemname
+                itemObj.description = description
+                itemObj.completed = completed
+                itemObj.save()
+                serializer = ItemSerializer(itemObj)
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            else:
+                raise ValidationError(
+                    "please provide valid item name,description,completed and todo id")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
-def createUser(request):
+class UserView(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'id'
 
-    try:
-        username = request.data['username']
-        email = request.data['email']
-        password = request.data['password']
-        user = User.objects.create_user(username, email, password)
-        print(user.username)
-        return Response({"user": user.username})
-    except:
-        return Response({"error": "couldnot create username"})
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def create(self, request):
+        try:
+
+            if UserValidator(request.data).is_valid():
+                username = request.data['username']
+                password = request.data['password']
+                if User.objects.filter(username=username).exists():
+                    raise ValidationError("username already exist")
+                user = User.objects.create_user(
+                    username=username, password=password)
+                serialized = UserSerializer(user)
+                return Response(serialized.data, status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError(
+                    "please provide valid username and password of min length 8(not all numeric)")
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

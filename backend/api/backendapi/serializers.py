@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Board, Todo, Item
+from django.contrib.auth.models import User
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -26,3 +27,9 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ('id', 'name', 'todos')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
