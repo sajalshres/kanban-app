@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!-- Using the 'async' attribute will keep our script from blocking the page load. -->
+</head>
+
+<body>
+
+  <script id="todoTemplate" type="text/html">
+      <%= title%>
+      <button class="remove">remove</button><button class = "edit">edit</button>
+  </script>
+  <script id="inputTemplate" type="text/html">
+        <label><%= status%> Task:</label>
+        <input type="text" id="newTask" name="fname">
+        <input type="submit" value="add">  
+  </script>
+
+  <script id="editTemplate" type="text/html">
+    <input type="text" id= "editor" class="editTask" value="<%= title%>">
+    <button class="cancel">Cancel</button>
+    <button type="submit" class="editText" id="edit">Edit</button>
+  </script>
+
+  <script src="bundle.js"></script>
+
+</body>
+
+</html>
