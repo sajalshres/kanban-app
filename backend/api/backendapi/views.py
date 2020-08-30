@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.contrib.auth.models import User
-from django.core.exceptions import FieldError, ValidationError
+
 from django.http import HttpResponse
 from .models import Board, Todo, Item
 from .validator import BoardValidator, TodoValidator, ItemValidator, UserValidator
-from .serializers import BoardSerializer, ItemSerializer, TodoSerializer, UserSerializer
+from .serializers import BoardSerializer, ItemSerializer, TodoSerializer, UserSerializer, UsergetSerializer
 from rest_framework.response import Response
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, serializers
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view
@@ -29,11 +29,32 @@ class BoardView(viewsets.ModelViewSet):
         try:
             if BoardValidator(request.data).is_valid():
                 name = request.data['name']
+                if Board.objects.filter(user=userObj, name=name).exists():
+                    raise Exception('Board already exists')
                 boardObj = Board.objects.create(user=userObj, name=name)
                 serialized = BoardSerializer(boardObj)
                 return Response(serialized.data, status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError("please provide valid board name")
+                raise Exception("please provide valid board name")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, id=None):
+        '''Edit board and save it under logged in user.'''
+        userObj = get_object_or_404(User, username=request.user)
+        try:
+            if BoardValidator(request.data).is_valid():
+                name = request.data['name']
+
+                if Board.objects.filter(user=userObj, name=name).exists():
+                    raise Exception('Board already exists')
+                boardObj = get_object_or_404(Board, user=userObj, id=id)
+                boardObj.name = name
+                boardObj.save()
+                serialized = BoardSerializer(boardObj)
+                return Response(serialized.data, status=status.HTTP_201_CREATED)
+            else:
+                raise Exception("please provide valid board name")
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -58,11 +79,14 @@ class TodoView(viewsets.ModelViewSet):
                 boardid = request.data['board']
                 name = request.data['name']
                 boardObj = get_object_or_404(Board, user=userObj, id=boardid)
+                if Todo.objects.filter(board=boardObj, name=name).exists():
+                    raise Exception('Todo already exists')
                 todo = Todo.objects.create(board=boardObj, name=name)
-                serialized = TodoSerializer(todo)
+                serialized = TodoSerializer(
+                    todo, context={'request': self.request})
                 return Response(serialized.data, status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError(
+                raise Exception(
                     "please provide valid todo name and board id")
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -74,16 +98,22 @@ class TodoView(viewsets.ModelViewSet):
                 boardid = request.data['board']
                 name = request.data['name']
                 # Below line checks if board id to which todo is to be kept after update, exists and belongs to user
-                boardObj = get_object_or_404(
+                boardObj1 = get_object_or_404(
                     Board, user=request.user, id=boardid)
+
+                if Todo.objects.filter(board=boardObj1, name=name).exists():
+                    raise Exception('Todo already exists')
+
                 boardObj = get_list_or_404(Board, user=request.user)
                 todoObj = get_object_or_404(Todo, board__in=boardObj, id=id)
                 todoObj.name = name
+                todoObj.board = boardObj1
                 todoObj.save()
+
                 serializer = TodoSerializer(todoObj)
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                raise ValidationError(
+                raise Exception(
                     "please provide valid todo name and board id")
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -107,17 +137,24 @@ class ItemView(viewsets.ModelViewSet):
         try:
             if ItemValidator(request.data).is_valid():
                 description = request.data['description']
-                completed = request.data['completed']
+                if 'completed' in request.data:
+                    completed = True
+                else:
+                    completed = False
+
                 name = request.data['name']
                 boardObj = get_list_or_404(Board, user=request.user)
-                todo = get_object_or_404(
+                todoObj = get_object_or_404(
                     Todo, board__in=boardObj, id=request.data['todo'])
+                if Item.objects.filter(todo=todoObj, name=name).exists():
+                    raise Exception('Item already exists')
                 item = Item.objects.create(
-                    todo=todo, description=description, completed=completed, name=name)
-                serializer = ItemSerializer(item)
+                    todo=todoObj, description=description, completed=completed, name=name)
+                serializer = ItemSerializer(
+                    item, context={'request': self.request})
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError(
+                raise Exception(
                     "please provide valid item name,description,completed and todo id")
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -130,21 +167,27 @@ class ItemView(viewsets.ModelViewSet):
                 todoid = request.data['todo']
                 itemname = request.data['name']
                 description = request.data['description']
-                completed = request.data['completed']
+                if 'completed' in request.data:
+                    completed = True
+                else:
+                    completed = False
                 # Check if todo with which item to be linked after update is authenticated
                 boardObj = get_list_or_404(Board, user=request.user)
-                todoObj = get_object_or_404(
+                todoObj1 = get_object_or_404(
                     Todo, board__in=boardObj, id=todoid)
+                if Item.objects.filter(todo=todoObj1, name=itemname, description=description, completed=completed).exists():
+                    raise Exception('Item already exists')
                 todoObj = get_list_or_404(Todo, board__in=boardObj)
                 itemObj = get_object_or_404(Item, todo__in=todoObj, id=id)
                 itemObj.name = itemname
                 itemObj.description = description
                 itemObj.completed = completed
+                itemObj.todo = todoObj1
                 itemObj.save()
                 serializer = ItemSerializer(itemObj)
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                raise ValidationError(
+                raise Exception(
                     "please provide valid item name,description,completed and todo id")
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -153,6 +196,7 @@ class ItemView(viewsets.ModelViewSet):
 class UserView(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [AllowAny]
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'id'
@@ -160,21 +204,24 @@ class UserView(viewsets.ModelViewSet):
     def get_queryset(self):
         return User.objects.filter(id=self.request.user.id)
 
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserSerializer
+        return UsergetSerializer
+
     def create(self, request):
         try:
-
             if UserValidator(request.data).is_valid():
                 username = request.data['username']
                 password = request.data['password']
                 if User.objects.filter(username=username).exists():
-                    raise ValidationError("username already exist")
+                    raise Exception("username already exists")
                 user = User.objects.create_user(
                     username=username, password=password)
-                serialized = UserSerializer(user)
+                serialized = UsergetSerializer(user)
                 return Response(serialized.data, status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError(
+                raise Exception(
                     "please provide valid username and password of min length 8(not all numeric)")
-
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

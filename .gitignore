@@ -1,1 +1,7 @@
 node_modules
+.coverage
+.coverage.*
+db.sqlite3
+__pycache__
+.cache
+*_initial.py
