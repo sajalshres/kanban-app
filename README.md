@@ -37,32 +37,33 @@ A KanBan swim lane application based on BackBoneJS and MarionetteJS
 - Copy url:- https://github.com/sajalshres/kanban-app.git
 - Clone into a directory.After cloning you will get a similar folder structure like this:
 - kanban-app
- ┣ app
- ┃ ┣ collections
- ┃ ┣ models
- ┃ ┣ services
- ┃ ┣ templates
- ┃ ┣ views
- ┃ ┗ index.js
- ┣ backend
- ┃ ┗ api
- ┃ ┃ ┣ api
- ┃ ┃ ┣ backendapi
- ┃ ┃ ┣ manage. py
- ┃ ┃ ┗ requirements.txt
- ┣ public
- ┃ ┣ css
- ┃ ┣ bundle.js
- ┃ ┗ index.html
- ┣ test
- ┃ ┣ frontend_tests
- ┃ ┗ model.tests.js
- ┣ .gitignore
- ┣ README. md
- ┣ db.json
- ┣ package-lock.json
- ┣ package.json
- ┗ webpack.config.js
+
+ ┣ app  
+ ┃ ┣ collections  
+ ┃ ┣ models  
+ ┃ ┣ services  
+ ┃ ┣ templates  
+ ┃ ┣ views  
+ ┃ ┗ index.js  
+ ┣ backend  
+ ┃ ┗ api  
+ ┃ ┃ ┣ api  
+ ┃ ┃ ┣ backendapi  
+ ┃ ┃ ┣ manage. py  
+ ┃ ┃ ┗ requirements.txt  
+ ┣ public  
+ ┃ ┣ css  
+ ┃ ┣ bundle.js  
+ ┃ ┗ index.html  
+ ┣ test  
+ ┃ ┣ frontend_tests  
+ ┃ ┗ model.tests.js  
+ ┣ .gitignore  
+ ┣ README. md  
+ ┣ db.json  
+ ┣ package-lock.json  
+ ┣ package.json  
+ ┗ webpack.config.js  
 
 - Open kanban-app directory and open command prompt or powershell(for windows) or terminal(linux)
 - Type following code:
