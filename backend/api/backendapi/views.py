@@ -184,7 +184,8 @@ class ItemView(viewsets.ModelViewSet):
                 itemObj.completed = completed
                 itemObj.todo = todoObj1
                 itemObj.save()
-                serializer = ItemSerializer(itemObj)
+                serializer = ItemSerializer(
+                    itemObj, context={'request': self.request})
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 raise Exception(

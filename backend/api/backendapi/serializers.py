@@ -9,8 +9,6 @@ class BoardPKField(serializers.PrimaryKeyRelatedField):
     '''
 
     def get_queryset(self):
-        print('hereeeeeeeeeeeeeeeeeeeeeeeeee')
-        print(self.context)
         user = self.context['request'].user
         queryset = Board.objects.filter(user=user)
         return queryset
@@ -20,7 +18,6 @@ class TodoPKField(serializers.PrimaryKeyRelatedField):
     '''Makes sure only the user specific todos are shown in the drop down choice Field.'''
 
     def get_queryset(self):
-
         user = self.context['request'].user
         board = Board.objects.filter(user=user)
         queryset = Todo.objects.filter(board__in=board)
