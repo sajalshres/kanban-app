@@ -110,7 +110,8 @@ class TodoView(viewsets.ModelViewSet):
                 todoObj.board = boardObj1
                 todoObj.save()
 
-                serializer = TodoSerializer(todoObj)
+                serializer = TodoSerializer(
+                    todoObj, context={'request': self.request})
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 raise Exception(

@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: kanban-app
+      POSTGRES_PASSWORD: test123
+  code:
+    build:
+      context: .
+    ports:
+      - "5555:5555"
+    volumes:
+      - .:/code
+    command: python backend/api/manage.py runserver 0.0.0.0:5555
+    depends_on:
+      - db
+
+  

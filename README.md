@@ -61,6 +61,8 @@ A KanBan swim lane application based on BackBoneJS and MarionetteJS
  ┣ .gitignore  
  ┣ README. md  
  ┣ db.json  
+ ┣ docker-compose.yml
+ ┣ dockerfile    
  ┣ package-lock.json  
  ┣ package.json  
  ┗ webpack.config.js  
