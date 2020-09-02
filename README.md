@@ -82,7 +82,7 @@ A KanBan swim lane application based on BackBoneJS and MarionetteJS
 Backend is built using django (3.1) and  django rest framework (3.11.1).
 
 
-### Installing Backend
+
 
 ## Installing Backend
 
