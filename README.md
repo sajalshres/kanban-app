@@ -84,30 +84,19 @@ Backend is built using django (3.1) and  django rest framework (3.11.1).
 
 ### Installing Backend
 
- - First, create a virtual environment using virtualenv or venv.
- - Activate your virtual environment and go inside kanban-app    
-   directory.
- - Then, install the requirements in your environment using:
+## Installing Backend
 
-	`pip install -r backend/api/requirements.txt`
+  
+__Make sure you have docker installed.__
 
+Goto root folder called kan-ban app.
+Run the following code:
 
-	After installation make sure you migrate the app using
+    `docker-compose up`
 
-    `python manage.py makemigrations`
-    `python manage.py migrate`
-	
- - Now you can run server on port 8080 (or in any given port number) by:
+By default, the server will be running on ***localhost:5555/api/***
 
-	`python manage.py runserver 8080`
-
- - You can create superuser using:
-
-	 `python manage.py createsuperuser`
- 
-
-	and then add other users through the django admin web interface. 
-
-	 OR,
-
-	 you can directly create a user by sending POST request with username and password to localhost:8080/api/user
+ - User related queries on *localhost:5555/api/user/*
+ - Board related queries on *localhost:5555/api/board/*
+ - Todo related queries on *localhost:5555/api/todo/*
+ - Item related queries on *localhost:5555/api/item/*
