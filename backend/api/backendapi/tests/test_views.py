@@ -54,12 +54,14 @@ class UserTests(APITestCase):
         myclient = APIClient()
         myclient.login(username='suraj1', password='userpass1')
         response = myclient.get(self.userlist)
+
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['username'], 'suraj1')
 
         # test what a logged in user can get from [/user/1]
         url1 = reverse('user-detail', kwargs={'id': 1})
         response = myclient.get(url1)
+
         self.assertEqual(response.data['id'], 1)
         self.assertEqual(response.data['username'], 'suraj1')
 
@@ -164,13 +166,13 @@ class BoardTest(APITestCase):
         # cannot update others board
         response = self.client2.put(
             self.boarddetail1, {'name': 'suraj1-board1'})
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data['detail'], 'Not found.')
+        self.assertEqual(response.status_code, 400)
+        # self.assertEqual(response.data['detail'], 'Not found.')
 
         # can update own board
         response = self.client1.put(
             self.boarddetail1, {'name': 'suraj1-board1-updated'})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data['name'], 'suraj1-board1-updated')
 
     def test_delete_board(self):
@@ -304,10 +306,13 @@ class TestItem(APITestCase):
         cls.client2 = APIClient()
         cls.client1.login(username='suraj1', password='userpass1')
         cls.client2.login(username='suraj2', password='userpass2')
-        cls.client1.post(cls.boardlist, {'name': 'suraj1-board1'})
+        response = cls.client1.post(cls.boardlist, {'name': 'suraj1-board1'})
         cls.client2.post(cls.boardlist, {'name': 'suraj2-board1'})
-        cls.client1.post(cls.todolist, {'name': 'suraj1-todo1', 'board': 1})
-        cls.client2.post(cls.todolist, {'name': 'suraj2-todo1', 'board': 2})
+        cls.client1.post(
+            cls.todolist, {'name': 'suraj1-todo1', 'board': 1})
+
+        cls.client2.post(
+            cls.todolist, {'name': 'suraj2-todo1', 'board': 2})
 
     def setUp(self):
         response = self.client1.post(
@@ -347,6 +352,7 @@ class TestItem(APITestCase):
     def test_get_item(self):
         # get items from [/item/]
         response = self.client1.get(self.itemlist)
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['id'], 1)

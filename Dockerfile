@@ -9,4 +9,8 @@ WORKDIR /code
 
 COPY . /code
 
+
 RUN pip install -r backend/api/requirements.txt
+RUN chmod +x init.sh
+
+ENTRYPOINT [ "./init.sh" ]
