@@ -61,8 +61,9 @@ A KanBan swim lane application based on BackBoneJS and MarionetteJS
  ┣ .gitignore  
  ┣ README. md  
  ┣ db.json  
- ┣ docker-compose.yml
- ┣ dockerfile    
+ ┣ docker-compose.yml  
+ ┣ dockerfile  
+ ┣ init.sh
  ┣ package-lock.json  
  ┣ package.json  
  ┗ webpack.config.js  
@@ -92,7 +93,7 @@ __Make sure you have docker installed.__
 Goto root folder called kan-ban app.
 Run the following code:
 
-    `docker-compose up`
+    docker-compose up
 
 By default, the server will be running on ***localhost:5555/api/***
 
